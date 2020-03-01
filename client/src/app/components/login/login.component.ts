@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -8,15 +8,20 @@ import { Validators } from '@angular/forms';
 	styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent implements OnInit {
-	loginForm = this.fb.group({
-		name: [ '', Validators.required ],
-		password: [ '', Validators.required ]
-	});
+	submitted = false;
+	loginForm: FormGroup;
+
 	constructor(private fb: FormBuilder) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.loginForm = this.fb.group({
+			email: [ '', [ Validators.required, Validators.email ] ],
+			password: [ '', Validators.required ]
+		});
+	}
 
 	onSubmit() {
+		this.submitted = true;
 		console.warn(this.loginForm.value);
 	}
 }

@@ -8,16 +8,21 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: [ './register.component.css' ]
 })
 export class RegisterComponent implements OnInit {
-	registerForm: FormGroup;
+	registerFormFirst: FormGroup;
+	registerFormSecond: FormGroup;
+	stepper = false;
 
 	constructor(private fb: FormBuilder) {}
 
 	ngOnInit() {
-		this.registerForm = this.fb.group({
+		this.registerFormFirst = this.fb.group({
 			id: [ , Validators.required ],
 			email: [ '', [ Validators.required, Validators.email ] ],
 			password: [ '', Validators.required ],
-			passwordConfirm: [ '', Validators.required ],
+			passwordConfirm: [ '', Validators.required ]
+		});
+
+		this.registerFormSecond = this.fb.group({
 			city: [ '', Validators.required ],
 			street: [ '', Validators.required ],
 			name: [ '', Validators.required ],
@@ -25,7 +30,12 @@ export class RegisterComponent implements OnInit {
 		});
 	}
 
-	onSubmit() {
-		console.log(this.registerForm.value);
+	onRegisterFirst() {
+		console.log(this.registerFormFirst.value);
+		this.stepper = true;
+	}
+
+	onRegisterSecond() {
+		console.log(this.registerFormFirst.value);
 	}
 }
