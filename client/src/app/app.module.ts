@@ -9,9 +9,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { ShopDescriptionComponent } from './components/shop-description/shop-description.component';
 
 @NgModule({
-	declarations: [ AppComponent, LoginComponent, RegisterComponent, NavbarComponent ],
+	declarations: [ AppComponent, LoginComponent, RegisterComponent, NavbarComponent, HomeComponent, AboutComponent, ShopDescriptionComponent ],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [],
 	bootstrap: [ AppComponent ]

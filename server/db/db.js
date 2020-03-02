@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 
 module.exports = () => {
 	return mongoose.connect(
-		process.env.DB_URL,
+		process.env.DB_URL_LOCAL,
 		{
 			useUnifiedTopology: true,
-			useNewUrlParser: true
+			useNewUrlParser: true,
+			useCreateIndex: true
 		},
 		(e, conn) => {
 			if (e) console.log(e);

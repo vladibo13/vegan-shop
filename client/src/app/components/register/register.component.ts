@@ -31,11 +31,14 @@ export class RegisterComponent implements OnInit {
 	}
 
 	onRegisterFirst() {
+		console.log(this.registerFormFirst.status);
+		if (this.registerFormFirst.status === 'INVALID') return;
 		console.log(this.registerFormFirst.value);
+
 		this.stepper = true;
 	}
 
 	onRegisterSecond() {
-		console.log(this.registerFormFirst.value);
+		console.log(this.registerFormSecond.value);
 	}
 }

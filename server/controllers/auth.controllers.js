@@ -1,36 +1,66 @@
 const User = require('../models/User');
 const { getJwt } = require('../utils/newToken');
+const { verifyJwt } = require('../utils/verifyToken');
 const { hashPassword, compareHashPassword } = require('../utils/passwordHash');
 
-exports.signup = async (req, res) => {
-	if (!req.body.email || !req.body.password) {
-		return res.status(400).json({ message: 'need email and password' });
+exports.verifyAuth = async (req, res, next) => {
+	const bearer = req.headers.authorization;
+
+	if (!bearer || !bearer.startsWith('Bearer ')) {
+		return res.status(401).end();
+	}
+
+	const token = bearer.split('Bearer ')[1].trim();
+	let payload;
+	try {
+		payload = await verifyJwt(token);
+	} catch (e) {
+		return res.status(401).end();
+	}
+
+	const user = await User.findById(payload.id).select('-password');
+
+	if (!user) {
+		return res.status(401).end();
+	}
+
+	req.user = user;
+	next();
+};
+
+exports.register = async (req, res) => {
+	const { name, password } = req.body;
+
+	if (!name || !password) {
+		return res.status(400).json({ message: 'need name and password' });
 	}
 
 	try {
-		const hashedPassword = await hashPassword(req.body.password);
+		const hashedPassword = await hashPassword(password);
 		const user = await User.create({ ...req.body, password: hashedPassword });
-		return res.status(201).json({ user });
+		return res.status(201).json({ msg: 'user created', user });
 	} catch (e) {
 		return res.status(500).json({ e });
 	}
 };
 
-exports.signin = async (req, res) => {
-	if (!req.body.email || !req.body.password) {
-		return res.status(400).send({ message: 'need email and password' });
+exports.login = async (req, res) => {
+	const { name, password } = req.body;
+
+	if (!name || !password) {
+		return res.status(400).send({ message: 'need name and password' });
 	}
 
-	const invalid = { message: 'invalid email password combination' };
+	const invalid = { message: 'invalid name password combination' };
 
 	try {
-		const user = await User.findOne({ email: req.body.email }).select('email password');
+		const user = await User.findOne({ name }).select('name password');
 
 		if (!user) {
 			return res.status(401).json(invalid);
 		}
 
-		const match = await compareHashPassword(req.body.password, user.password);
+		const match = await compareHashPassword(password, user.password);
 
 		if (!match) {
 			return res.status(401).json(invalid);
