@@ -45,16 +45,16 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-	const { name, password } = req.body;
+	const { email, password } = req.body;
 
-	if (!name || !password) {
-		return res.status(400).send({ message: 'need name and password' });
+	if (!email || !password) {
+		return res.status(400).send({ message: 'need email and password' });
 	}
 
-	const invalid = { message: 'invalid name password combination' };
+	const invalid = { message: 'invalid email password combination' };
 
 	try {
-		const user = await User.findOne({ name }).select('name password');
+		const user = await User.findOne({ email }).select('name password');
 
 		if (!user) {
 			return res.status(401).json(invalid);
@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
 
 		const token = await getJwt({ ...req.body, password: null });
 
-		return res.status(201).json({ token });
+		return res.status(201).json(token);
 	} catch (e) {
 		console.log(e);
 		res.status(500).end();

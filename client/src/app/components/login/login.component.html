@@ -1,36 +1,45 @@
-<h4 class="text-center">Login</h4>
-<div class="row">
-  <div class="col-12">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-5">
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          class="form-control" id="email"
-          formControlName="email"
-          [ngClass]="{ 'is-invalid': submitted &&
-          loginForm.controls.email.errors }"
-          required>
-      </div>
+<div class="container">
+  <h4 class="text-center">Login</h4>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="mt-5">
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="password"
-          formControlName="password"
-          [ngClass]="{ 'is-invalid': submitted &&
-          loginForm.controls.password.errors}"
-          required>
-      </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control" id="email"
+            formControlName="email"
+            [ngClass]="{ 'is-invalid': submitted &&
+            loginForm.controls.email.errors }"
+            required>
+        </div>
 
-      <button type="submit" class="btn btn-outline-primary px-5">Submit</button>
-    </form>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
+            [ngClass]="{ 'is-invalid': submitted &&
+            loginForm.controls.password.errors}"
+            required>
+        </div>
+        <div class="alert alert-danger" *ngIf="error">
+          {{error}}
+        </div>
+        <div>
+          <button type="submit" class="btn btn-outline-primary px-5 mt-5">Submit</button>
+        </div>
+
+      </form>
+    </div>
   </div>
-</div>
 
-<p class="mt-5">
-  Form Status: {{ loginForm.status }}
-</p>
+  <p class="mt-5">
+    Form Status: {{ loginForm.status }}
+
+  </p>
+</div>

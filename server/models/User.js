@@ -26,10 +26,6 @@ const userSchema = new mongoose.Schema(
 			min: 5,
 			max: 10
 		},
-		password: {
-			type: String,
-			required: true
-		},
 		city: {
 			type: String,
 			required: true

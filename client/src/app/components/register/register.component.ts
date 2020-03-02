@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
 	registerFormSecond: FormGroup;
 	stepper = false;
 
-	constructor(private fb: FormBuilder) {}
+	constructor(private fb: FormBuilder, private authService: AuthService) {}
 
 	ngOnInit() {
 		this.registerFormFirst = this.fb.group({
@@ -31,14 +32,16 @@ export class RegisterComponent implements OnInit {
 	}
 
 	onRegisterFirst() {
+		const { password, passwordConfirm } = this.registerFormFirst.value;
 		console.log(this.registerFormFirst.status);
-		if (this.registerFormFirst.status === 'INVALID') return;
-		console.log(this.registerFormFirst.value);
-
+		if (!this.registerFormFirst.valid) return;
+		if (password !== passwordConfirm) return;
 		this.stepper = true;
 	}
 
 	onRegisterSecond() {
-		console.log(this.registerFormSecond.value);
+		const data = { ...this.registerFormFirst.value, ...this.registerFormSecond.value };
+		delete data.passwordConfirm;
+		this.authService.createUser(data).subscribe(() => console.log('registred success'), (e) => console.warn(e));
 	}
 }
