@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { PasswordValidator } from 'src/app/validators/password.validator';
 
 @Component({
 	selector: 'app-register',
@@ -16,12 +17,15 @@ export class RegisterComponent implements OnInit {
 	constructor(private fb: FormBuilder, private authService: AuthService) {}
 
 	ngOnInit() {
-		this.registerFormFirst = this.fb.group({
-			id: [ , Validators.required ],
-			email: [ '', [ Validators.required, Validators.email ] ],
-			password: [ '', Validators.required ],
-			passwordConfirm: [ '', Validators.required ]
-		});
+		this.registerFormFirst = this.fb.group(
+			{
+				id: [ , Validators.required ],
+				email: [ '', [ Validators.required, Validators.email ] ],
+				password: [ '', Validators.required ],
+				passwordConfirm: [ '', Validators.required ]
+			},
+			{ validator: PasswordValidator }
+		);
 
 		this.registerFormSecond = this.fb.group({
 			city: [ '', Validators.required ],
@@ -32,10 +36,7 @@ export class RegisterComponent implements OnInit {
 	}
 
 	onRegisterFirst() {
-		const { password, passwordConfirm } = this.registerFormFirst.value;
-		console.log(this.registerFormFirst.status);
 		if (!this.registerFormFirst.valid) return;
-		if (password !== passwordConfirm) return;
 		this.stepper = true;
 	}
 
@@ -43,5 +44,29 @@ export class RegisterComponent implements OnInit {
 		const data = { ...this.registerFormFirst.value, ...this.registerFormSecond.value };
 		delete data.passwordConfirm;
 		this.authService.createUser(data).subscribe(() => console.log('registred success'), (e) => console.warn(e));
+	}
+
+	get id() {
+		return this.registerFormFirst.get('id');
+	}
+
+	get email() {
+		return this.registerFormFirst.get('email');
+	}
+
+	get city() {
+		return this.registerFormSecond.get('city');
+	}
+
+	get street() {
+		return this.registerFormSecond.get('street');
+	}
+
+	get name() {
+		return this.registerFormSecond.get('name');
+	}
+
+	get lastName() {
+		return this.registerFormSecond.get('lastName');
 	}
 }

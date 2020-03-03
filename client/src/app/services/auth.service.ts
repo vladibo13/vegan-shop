@@ -21,16 +21,22 @@ export class AuthService {
 	}
 
 	//login
-	loginUser(user: object): Observable<object> {
+	loginUser(user: object): Observable<boolean> {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
-		return this.http.post<object>(`${this.shopUrl}/login`, user).pipe(catchError(this.handleError));
+
+		return this.http.post<object>(`${this.shopUrl}/login`, user).pipe(
+			map((token) => {
+				localStorage.setItem('token', JSON.stringify(token));
+				return true;
+			}),
+			catchError(this.handleError)
+		);
 	}
 
 	isLoggedIn() {
 		return !!localStorage.getItem('token');
 	}
-
 	private handleError(res: HttpErrorResponse | any) {
 		console.error(res.error || res.body.error);
 		return observableThrowError(res.error || 'Server error');
