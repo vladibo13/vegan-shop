@@ -1,7 +1,9 @@
 <div class="container-fluid">
     <div class="row mt-5">
-        <div class="col-md-4 col-sm-12">
-            <app-login></app-login>
+        <div class="col-md-4 col-sm-12 border">
+            <app-login *ngIf="!isLoggedIn"></app-login>
+            <h6 *ngIf="isLoggedIn && user">Welcome Back {{user}} </h6>
+            <p *ngIf="user">{{user}}</p>
         </div>
         <div class="col-md-4 col-sm-12 border">
             <app-about></app-about>

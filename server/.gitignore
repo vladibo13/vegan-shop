@@ -1,2 +1,5 @@
 node_modules
 .env
+seed
+./routes/test.router.js
+./controllers/test.controllers.js

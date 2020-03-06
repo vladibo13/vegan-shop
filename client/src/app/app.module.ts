@@ -14,6 +14,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ShopDescriptionComponent } from './components/shop-description/shop-description.component';
 import { StoreComponent } from './components/store/store.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 		HomeComponent,
 		AboutComponent,
 		ShopDescriptionComponent,
-		StoreComponent
+		StoreComponent,
+		FooterComponent
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [

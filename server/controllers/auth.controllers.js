@@ -3,23 +3,26 @@ const { getJwt } = require('../utils/newToken');
 const { verifyJwt } = require('../utils/verifyToken');
 const { hashPassword, compareHashPassword } = require('../utils/passwordHash');
 
+exports.getUser = async (req, res) => {};
+
 exports.verifyAuth = async (req, res, next) => {
 	const bearer = req.headers.authorization;
-
+	console.log('bearer = ', bearer);
 	if (!bearer || !bearer.startsWith('Bearer ')) {
 		return res.status(401).end();
 	}
 
 	const token = bearer.split('Bearer ')[1].trim();
+	console.log('token = ', token);
 	let payload;
 	try {
 		payload = await verifyJwt(token);
 	} catch (e) {
 		return res.status(401).end();
 	}
-
-	const user = await User.findById(payload.id).select('-password');
-
+	console.log('payload = ', payload);
+	const user = await User.find({ email: payload.email }).select('-password');
+	console.log('user = ', user);
 	if (!user) {
 		return res.status(401).end();
 	}
@@ -54,6 +57,7 @@ exports.login = async (req, res) => {
 	const invalid = { message: 'invalid email password combination' };
 
 	try {
+		console.log('login');
 		const user = await User.findOne({ email }).select('name password');
 
 		if (!user) {
@@ -68,7 +72,7 @@ exports.login = async (req, res) => {
 
 		const token = await getJwt({ ...req.body, password: null });
 
-		return res.status(201).json(token);
+		return res.status(201).json({ token, user: user.name });
 	} catch (e) {
 		console.log(e);
 		res.status(500).end();

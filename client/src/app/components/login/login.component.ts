@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 	error: any;
 	submitted = false;
 	loginForm: FormGroup;
+	user: string;
 
 	constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
 
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
 			},
 			(e) => {
 				this.error = e.message;
+				console.log(this.error);
 			}
 		);
 	}
