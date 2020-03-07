@@ -1,37 +1,33 @@
 
 
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <h5>Shopping Cart</h5>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
 
 
             <div class="container-fluid">
+
+
                 <h5>Products </h5>
 
-                <input [(ngModel)]="searchText" class="form-control"
-                    type="search"
-                    placeholder="Search For Products">
 
+                <div class="list-group list-group-horizontal">
+                    <button *ngFor="let c of categories; let i= index;"
+                        [class.active]="active === i" class="list-group-item
+                        flex-fill list-group-item-action" (click)="onClick(i)">{{c.type}}</button>
+                </div>
+                <app-products-search></app-products-search>
                 <div class="row">
-                    <div class="col-md-4 my-2" *ngFor="let p of products |
-                        search:searchText">
-                        <div class="card">
-                            <img class="card-img-top" [src]="p.imageURL"
-                                alt="Card
-                                image
-                                cap">
-                            <div class="card-body">
-                                <h5 class="card-title">{{p.pName}}</h5>
-                                <p class="card-text">type: {{p.categoryID.type}}</p>
-                                <a href="#" class="btn btn-primary">Buy</a>
-                            </div>
-                        </div>
-                    </div>
-
+                    <app-store-items
+                        class="col-md-4 my-2"
+                        *ngFor="let p of products |
+                        search:searchText:'pName'"
+                        [product]="p"></app-store-items>
                 </div>
             </div>
         </div>
