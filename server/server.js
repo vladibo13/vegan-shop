@@ -6,12 +6,14 @@ const express = require('express');
 const app = express();
 const authRouter = require('./routes/auth.router');
 const testRouter = require('./routes/test.router');
+const productRouter = require('./routes/product.router');
 
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
 app.use('/api/auth', authRouter);
+app.use('/api/product', productRouter);
 // app.use('/api', verifyAuth);
 app.use('/api/test', testRouter);
 

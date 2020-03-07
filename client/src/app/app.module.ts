@@ -15,6 +15,7 @@ import { ShopDescriptionComponent } from './components/shop-description/shop-des
 import { StoreComponent } from './components/store/store.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { FooterComponent } from './components/footer/footer.component';
+import { SearchPipe } from './pipes/search/search.pipe';
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { FooterComponent } from './components/footer/footer.component';
 		AboutComponent,
 		ShopDescriptionComponent,
 		StoreComponent,
-		FooterComponent
+		FooterComponent,
+		SearchPipe
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [
