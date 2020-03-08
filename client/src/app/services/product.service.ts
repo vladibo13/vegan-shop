@@ -15,7 +15,7 @@ export class ProductService {
 	constructor(private http: HttpClient) {}
 
 	getAllProducts(): Observable<Product> {
-		return this.http.get<Product>(this.productURL).pipe(map((p) => (this.products = p)));
+		return this.http.get<Product>(this.productURL);
 	}
 
 	private handleError(res: HttpErrorResponse | any) {
