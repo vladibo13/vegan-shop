@@ -17,15 +17,27 @@
 
 
                 <div class="list-group list-group-horizontal">
-                    <button *ngFor="let c of categories; let i= index;"
-                        [class.active]="active === i" class="list-group-item
-                        flex-fill list-group-item-action" (click)="onClick(i)">{{c.type}}</button>
+                    <a
+                        class="list-group-item flex-fill list-group-item-action"
+                        [class.active]="!category"
+                        [routerLink]="['/store']">All Categories</a>
+                    <!-- <a *ngFor="let c of categories; let i= index;"
+                        class="list-group-item flex-fill list-group-item-action"
+                        [routerLink]="['/store']"
+                        [queryParams]="{category: c.type}"
+                        [class.active]="active === i"
+                        (click)="onClick(i)">{{c.type}}</a> -->
+                    <a *ngFor="let c of categories; let i= index;"
+                        class="list-group-item flex-fill list-group-item-action"
+                        [routerLink]="['/store']"
+                        [queryParams]="{category: c.type}"
+                        [class.active]="category === c.type">{{c.type}}</a>
                 </div>
                 <app-products-search></app-products-search>
                 <div class="row">
                     <app-store-items
                         class="col-md-4 my-2"
-                        *ngFor="let p of products |
+                        *ngFor="let p of filtredProducts |
                         search:searchText:'pName'"
                         [product]="p"></app-store-items>
                 </div>

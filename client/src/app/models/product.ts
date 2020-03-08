@@ -1,6 +1,6 @@
 export class Product {
 	id: string;
 	pName: string;
-	categoryID: object;
+	categoryID: any;
 	imageURL: string;
 }
