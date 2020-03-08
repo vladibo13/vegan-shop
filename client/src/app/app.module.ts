@@ -18,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SearchPipe } from './pipes/search/search.pipe';
 import { ProductsSearchComponent } from './components/products-search/products-search.component';
 import { StoreItemsComponent } from './components/store-items/store-items.component';
+import { StoreFilterComponent } from './components/store-filter/store-filter.component';
 
 @NgModule({
 	declarations: [
@@ -32,7 +33,8 @@ import { StoreItemsComponent } from './components/store-items/store-items.compon
 		FooterComponent,
 		SearchPipe,
 		ProductsSearchComponent,
-		StoreItemsComponent
+		StoreItemsComponent,
+		StoreFilterComponent
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [

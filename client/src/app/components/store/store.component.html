@@ -1,42 +1,16 @@
-
-
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h5>Shopping Cart</h5>
-
         </div>
-        <div class="col-md-9">
-
-
+        <div class="col-md-10">
             <div class="container-fluid">
-
-
                 <h5>Products </h5>
-
-
-                <div class="list-group list-group-horizontal">
-                    <a
-                        class="list-group-item flex-fill list-group-item-action"
-                        [class.active]="!category"
-                        [routerLink]="['/store']">All Categories</a>
-                    <!-- <a *ngFor="let c of categories; let i= index;"
-                        class="list-group-item flex-fill list-group-item-action"
-                        [routerLink]="['/store']"
-                        [queryParams]="{category: c.type}"
-                        [class.active]="active === i"
-                        (click)="onClick(i)">{{c.type}}</a> -->
-                    <a *ngFor="let c of categories; let i= index;"
-                        class="list-group-item flex-fill list-group-item-action"
-                        [routerLink]="['/store']"
-                        [queryParams]="{category: c.type}"
-                        [class.active]="category === c.type">{{c.type}}</a>
-                </div>
+                <app-store-filter [category]="category"></app-store-filter>
                 <app-products-search></app-products-search>
                 <div class="row">
                     <app-store-items
-                        class="col-md-4 my-2"
+                        class="col-lg-4 col-md-6 my-2"
                         *ngFor="let p of filtredProducts |
                         search:searchText:'pName'"
                         [product]="p"></app-store-items>

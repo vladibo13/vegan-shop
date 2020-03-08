@@ -1,0 +1,15 @@
+<div class="sticky-top">
+    <div class="list-group list-group-horizontal">
+        <a
+            class="list-group-item flex-fill
+            list-group-item-action"
+            [class.active]="!category"
+            [routerLink]="['/store']">All Categories</a>
+        <a *ngFor="let c of categories; let i= index;"
+            class="list-group-item flex-fill
+            list-group-item-action"
+            [routerLink]="['/store']"
+            [queryParams]="{category: c.type}"
+            [class.active]="category === c.type">{{c.type}}</a>
+    </div>
+</div>

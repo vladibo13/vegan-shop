@@ -3,4 +3,5 @@ export class Product {
 	pName: string;
 	categoryID: any;
 	imageURL: string;
+	switchMap?: any;
 }
