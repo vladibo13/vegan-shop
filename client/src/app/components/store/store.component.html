@@ -11,7 +11,7 @@
                 <div class="row">
                     <app-store-items
                         class="col-lg-4 col-md-6 my-2"
-                        *ngFor="let p of filtredProducts |
+                        *ngFor="let p of products |
                         search:searchText:'pName'"
                         [product]="p"></app-store-items>
                 </div>

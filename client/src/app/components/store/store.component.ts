@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StoreComponent implements OnInit {
 	products: Product[] = [];
-	filtredProducts: Product[] = [];
 	searchText: string;
 	category: string;
 	unsubscribeSearchTextChanges: Subscription;
@@ -21,31 +20,33 @@ export class StoreComponent implements OnInit {
 		private productService: ProductService,
 		private searchService: SearchService,
 		private route: ActivatedRoute
-	) {
-		this.productService.getAllProducts().subscribe(
-			(p) => {
-				this.products = p;
-				this.filtredProducts = this.products;
-
-				this.route.queryParamMap.subscribe((params) => {
-					this.category = params.get('category');
-					if (this.category) {
-						this.filtredProducts = this.products.filter((p) => p.categoryID.type === this.category);
-					} else {
-						this.filtredProducts = this.products;
-					}
-				});
-			},
-			(e) => console.log(e)
-		);
-	}
+	) {}
 
 	ngOnInit(): void {
 		this.unsubscribeSearchTextChanges = this.searchService.searchTextChanges.subscribe((newValue: string) => {
 			this.searchText = newValue;
 		});
-	}
 
+		this.route.queryParamMap.subscribe((params) => {
+			this.category = params.get('category');
+			if (this.category) {
+				this.getProductsByCategory();
+			} else {
+				this.getProducts();
+			}
+		});
+	}
+	getProductsByCategory() {
+		this.productService.getAllProductsByCategory(this.category).subscribe((p) => (this.products = p));
+	}
+	getProducts() {
+		this.productService.getAllProducts().subscribe(
+			(p) => {
+				this.products = p;
+			},
+			(e) => console.log(e)
+		);
+	}
 	ngOnDestroy(): void {
 		this.unsubscribeSearchTextChanges.unsubscribe();
 	}

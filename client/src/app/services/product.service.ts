@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -10,12 +10,18 @@ import { Product } from '../models/product';
 })
 export class ProductService {
 	private productURL = 'http://localhost:5000/api/product';
+
 	products: Product;
 
 	constructor(private http: HttpClient) {}
 
 	getAllProducts(): Observable<Product[]> {
-		return this.http.get<Product[]>(this.productURL);
+		return this.http.get<Product[]>(this.productURL).pipe(catchError(this.handleError));
+	}
+
+	getAllProductsByCategory(category: string): Observable<Product[]> {
+		let params = new HttpParams().set('search', category);
+		return this.http.get<Product[]>(this.productURL + '/s', { params });
 	}
 
 	private handleError(res: HttpErrorResponse | any) {

@@ -5,6 +5,7 @@ import { Product } from 'src/app/models/product';
 	name: 'search'
 })
 export class SearchPipe implements PipeTransform {
+	constructor() {}
 	transform(items: Product[], searchText: string, searchKey: string): any {
 		if (!searchText) return items;
 		if (!Array.isArray(items)) return [];
