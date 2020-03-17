@@ -34,18 +34,21 @@ export class AuthService {
 
 	//login
 	loginUser(user: object): Observable<boolean> {
-		return this.http.post<{ token: string; user: string }>(`${this.shopUrl}/login`, user).pipe(
-			map((response) => {
-				console.log(response);
-				const { token, user } = response;
-				if (token) {
-					localStorage.setItem('token', JSON.stringify(token));
-					localStorage.setItem('user', user);
-					return true;
-				}
-			}),
-			catchError(this.handleError)
-		);
+		return this.http
+			.post<{ token: string; user: { name: string; _id: string } }>(`${this.shopUrl}/login`, user)
+			.pipe(
+				map((response) => {
+					console.log(response);
+					const { token, user } = response;
+					if (token) {
+						localStorage.setItem('token', token);
+						localStorage.setItem('user', user.name);
+						localStorage.setItem('userID', user._id);
+						return true;
+					}
+				}),
+				catchError(this.handleError)
+			);
 	}
 
 	userInfo() {
@@ -54,6 +57,10 @@ export class AuthService {
 
 	isLoggedIn() {
 		return !!localStorage.getItem('token');
+	}
+
+	userIdInfo() {
+		return localStorage.getItem('userId');
 	}
 
 	private handleError(res: HttpErrorResponse | any) {

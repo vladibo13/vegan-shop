@@ -1,16 +1,56 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <h5>Shopping Cart</h5>
+    <hr>
+    <h5>Shopping Cart</h5>
+    <p>
+        <button type="button" class="btn btn-outline-primary"
+            (click)="isCollapsed= !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            Open/Close
+        </button>
+    </p>
+    <div id="collapseExample" [ngbCollapse]="isCollapsed">
+        <div class="card">
+            <div class="card-body">
+                You can collapse this card by clicking Toggle
+                <button (click)="updateCartProducts()" class="btn
+                    btn-outline-primary">Refresh</button>
+            </div>
+
         </div>
-        <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                {{ cartProducts | json }}
+            </div>
+
+        </div>
+        <div *ngFor="let p of cartProducts" class="card">
+            <div class="card-body">
+                <img [src]="p.productID.imageURL" class="rounded-circle
+                    img-fluid card-img-top img-custom">
+                {{p.productID.pName}}
+            </div>
+
+        </div>
+        <!-- <div *ngFor="let p of cartProducts"class="card">
+            <div class="card-body">
+                {{ p }}
+            </div>
+
+        </div> -->
+    </div>
+
+    <hr>
+    <div class="row">
+
+        <div class="col-md-12">
             <div class="container-fluid">
                 <h5>Products </h5>
-                <app-store-filter [category]="category"></app-store-filter>
-                <app-products-search></app-products-search>
+                <app-store-filter *ngIf="!searchText"
+                    [category]="category"></app-store-filter>
+                <app-products-search *ngIf="!category"></app-products-search>
                 <div class="row">
                     <app-store-items
-                        class="col-lg-4 col-md-6 my-2"
+                        class="col-lg-4 col-md-6 my-3"
                         *ngFor="let p of products |
                         search:searchText:'pName'"
                         [product]="p"></app-store-items>

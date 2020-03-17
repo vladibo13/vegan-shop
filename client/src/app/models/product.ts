@@ -1,7 +1,8 @@
 export class Product {
-	id: string;
+	_id?: string;
 	pName: string;
 	categoryID: any;
 	imageURL: string;
+	price: number;
 	switchMap?: any;
 }

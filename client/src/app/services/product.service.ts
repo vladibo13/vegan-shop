@@ -21,7 +21,13 @@ export class ProductService {
 
 	getAllProductsByCategory(category: string): Observable<Product[]> {
 		let params = new HttpParams().set('search', category);
-		return this.http.get<Product[]>(this.productURL + '/s', { params });
+		return this.http.get<Product[]>(this.productURL + '/s/c', { params });
+	}
+
+	getAllProductsByInput(searchText: string): Observable<Product[]> {
+		console.log('FROM INPUT = ', searchText);
+
+		return this.http.get<Product[]>(`${this.productURL}/${searchText}`);
 	}
 
 	private handleError(res: HttpErrorResponse | any) {

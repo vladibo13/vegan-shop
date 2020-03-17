@@ -20,7 +20,7 @@ export class ProductsSearchComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.unsubscribeSearchTextChanges = this.searchFormControl.valueChanges
-			.pipe(debounceTime(400))
+			.pipe(debounceTime(200))
 			.subscribe((newValue: string) => {
 				this.searchService.setSearchTextChanges(newValue);
 				// this.searchText = newValue;

@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const cartSchema = new mongoose.Schema(
 	{
-		userID: { type: Schema.Types.ObjectId, ref: 'user' }
+		userID: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+		completed: { type: Boolean, default: false }
 	},
 	{ timestamps: true }
 );

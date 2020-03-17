@@ -11,19 +11,6 @@
 
     </div>
     <div class="card-footer">
-        <div *ngIf="buying" class="input-group mb-3">
-            <div class="input-group-prepend">
-                <button class="input-group-text">+</button>
-            </div>
-            <input [(ngModel)]="val" type="number" class="form-control"
-                aria-label="Amount (to the
-                nearest dollar)">
-            <div class="input-group-append">
-                <button class="input-group-text">-</button>
-            </div>
-        </div>
-        {{val}}
-        <button *ngIf="!buying" (click)="addToCart()" class="btn btn-primary
-            btn-block">Buy</button>
+        <app-store-modal [product]="product"></app-store-modal>
     </div>
 </div>

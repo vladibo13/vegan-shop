@@ -1,5 +1,6 @@
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 
 exports.getAllCategories = async (req, res) => {
 	try {
@@ -43,5 +44,28 @@ exports.productCreate = async (req, res) => {
 		res.json({ product });
 	} catch (e) {
 		res.json({ e });
+	}
+};
+
+exports.createCart = async (req, res) => {
+	const { userID } = req.body;
+	try {
+		const cart = await Cart.create({ userID });
+		res.json(cart);
+	} catch (e) {
+		res.json(e);
+	}
+};
+
+exports.checkIfExist = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await Cart.find({ userID: id });
+		const [ result ] = user;
+		if (user[0].completed) console.log(' completed');
+		else console.log('not completed');
+		res.json(result.completed);
+	} catch (e) {
+		res.json([]);
 	}
 };

@@ -8,14 +8,10 @@ import { Product } from 'src/app/models/product';
 })
 export class StoreItemsComponent implements OnInit {
 	@Input() product: Product;
-	val: number;
-	buying = false;
 
 	constructor() {}
 
 	ngOnInit(): void {}
 
-	addToCart() {
-		this.buying = true;
-	}
+	addToCart() {}
 }

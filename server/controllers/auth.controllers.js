@@ -6,14 +6,15 @@ const { hashPassword, compareHashPassword } = require('../utils/passwordHash');
 exports.getUser = async (req, res) => {};
 
 exports.verifyAuth = async (req, res, next) => {
-	const bearer = req.headers.authorization;
-	console.log('bearer = ', bearer);
-	if (!bearer || !bearer.startsWith('Bearer ')) {
-		return res.status(401).end();
-	}
+	// const bearer = req.headers.authorization;
+	// console.log('bearer = ', bearer);
+	// if (!bearer || !bearer.startsWith('Bearer ')) {
+	// 	return res.status(401).end();
+	// }
 
-	const token = bearer.split('Bearer ')[1].trim();
-	console.log('token = ', token);
+	// const token = bearer.split('Bearer ')[1].trim();
+	// console.log('token = ', token);
+	const token = req.headers.authorization;
 	let payload;
 	try {
 		payload = await verifyJwt(token);
@@ -58,7 +59,7 @@ exports.login = async (req, res) => {
 
 	try {
 		console.log('login');
-		const user = await User.findOne({ email }).select('name password');
+		const user = await User.findOne({ email }).select('name password ');
 
 		if (!user) {
 			return res.status(401).json(invalid);
@@ -72,7 +73,7 @@ exports.login = async (req, res) => {
 
 		const token = await getJwt({ ...req.body, password: null });
 
-		return res.status(201).json({ token, user: user.name });
+		return res.status(201).json({ token, user: user });
 	} catch (e) {
 		console.log(e);
 		res.status(500).end();
