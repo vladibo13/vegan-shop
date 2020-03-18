@@ -20,6 +20,7 @@ import { ProductsSearchComponent } from './components/products-search/products-s
 import { StoreItemsComponent } from './components/store-items/store-items.component';
 import { StoreFilterComponent } from './components/store-filter/store-filter.component';
 import { StoreModalComponent } from './components/store-modal/store-modal.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
 	declarations: [
@@ -36,7 +37,8 @@ import { StoreModalComponent } from './components/store-modal/store-modal.compon
 		ProductsSearchComponent,
 		StoreItemsComponent,
 		StoreFilterComponent,
-		StoreModalComponent
+		StoreModalComponent,
+		OrderComponent
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [

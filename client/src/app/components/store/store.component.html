@@ -23,20 +23,15 @@
             </div>
 
         </div>
-        <div *ngFor="let p of cartProducts" class="card">
+        <div *ngFor="let p of cartProducts" class="card my-2">
             <div class="card-body">
                 <img [src]="p.productID.imageURL" class="rounded-circle
                     img-fluid card-img-top img-custom">
                 {{p.productID.pName}}
+                <button class="btn btn-outline-danger">Delete</button>
             </div>
-
         </div>
-        <!-- <div *ngFor="let p of cartProducts"class="card">
-            <div class="card-body">
-                {{ p }}
-            </div>
-
-        </div> -->
+        <a class="display-3 text-center" [routerLink]="['/order']">Order</a>
     </div>
 
     <hr>
