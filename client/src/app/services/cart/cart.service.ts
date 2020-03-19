@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -27,6 +27,18 @@ export class CartService {
 
 	getCart() {
 		return localStorage.getItem('cartID');
+	}
+
+	deleteCartProduct(cartInfoID: string) {
+		const options = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/json'
+			}),
+			body: {
+				cartInfoID
+			}
+		};
+		return this.http.delete(this.cartUrl, options);
 	}
 
 	addToCart(product: object) {}

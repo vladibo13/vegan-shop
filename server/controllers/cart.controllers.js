@@ -42,3 +42,13 @@ exports.getCartProducts = async (req, res) => {
 		res.json(e);
 	}
 };
+
+exports.deleteCartProduct = async (req, res) => {
+	const { cartInfoID } = req.body;
+	try {
+		const cartProduct = await CartInfo.deleteOne({ _id: cartInfoID });
+		res.status(200).json({ cartProduct, msg: 'deleted' });
+	} catch (e) {
+		return res.status(401).json(e);
+	}
+};

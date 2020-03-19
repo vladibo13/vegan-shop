@@ -1,0 +1,11 @@
+
+
+    <div  class="card my-2">
+        <div class="card-body">
+            <img [src]="cartProduct.productID.imageURL" class="rounded-circle
+                img-fluid card-img-top img-custom">
+            {{cartProduct.productID.pName}}
+            <button (click)="deleteCartProduct(cartProduct._id)" class="btn btn-outline-danger">Delete</button>
+        </div>
+    </div>
+  

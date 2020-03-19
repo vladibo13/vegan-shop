@@ -1,5 +1,8 @@
 <div class="container-fluid">
     <hr>
+    <div class="card-body">
+        {{ cartProducts | json }}
+    </div>
     <h5>Shopping Cart</h5>
     <p>
         <button type="button" class="btn btn-outline-primary"
@@ -9,31 +12,13 @@
         </button>
     </p>
     <div id="collapseExample" [ngbCollapse]="isCollapsed">
-        <div class="card">
-            <div class="card-body">
-                You can collapse this card by clicking Toggle
-                <button (click)="updateCartProducts()" class="btn
-                    btn-outline-primary">Refresh</button>
-            </div>
-
-        </div>
-        <div class="card">
-            <div class="card-body">
-                {{ cartProducts | json }}
-            </div>
-
-        </div>
-        <div *ngFor="let p of cartProducts" class="card my-2">
-            <div class="card-body">
-                <img [src]="p.productID.imageURL" class="rounded-circle
-                    img-fluid card-img-top img-custom">
-                {{p.productID.pName}}
-                <button class="btn btn-outline-danger">Delete</button>
-            </div>
-        </div>
-        <a class="display-3 text-center" [routerLink]="['/order']">Order</a>
+        <app-cart
+         *ngFor="let p of cartProducts"  
+         [cartProduct]="p" 
+         (deleted)="onDeleted($event)"></app-cart>
+        <a class="display-4  text-center d-block my-3" [routerLink]="['/order']">Order</a>
     </div>
-
+   
     <hr>
     <div class="row">
 
