@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Buy Product</h4>
+        <h4 class="modal-title" id="modal-basic-title">Buy {{product.pName}}</h4>
         <button type="button" class="close" aria-label="Close"
             (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -9,7 +9,7 @@
     <div class="modal-body">
 
         <div class="form-group">
-            <label>Products Update</label>
+            <label>Amount To Buy </label>
             <div class="input-group">
                 <input [(ngModel)]="amount" class="form-control"
                     type="number">
@@ -24,4 +24,4 @@
     </div>
 </ng-template>
 
-<button class="btn btn-block btn-primary" (click)="open(content)">Buy</button>
+<button class="btn btn-block btn-success" (click)="open(content)">Buy</button>

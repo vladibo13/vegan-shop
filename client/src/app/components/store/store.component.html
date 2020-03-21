@@ -12,29 +12,37 @@
         </button>
     </p>
     <div id="collapseExample" [ngbCollapse]="isCollapsed">
+        <div class="card" *ngIf="cartProducts.length === 0">
+            <div class="card-body">
+                <h4>No Products In Cart</h4>
+            </div>
+        </div>
         <app-cart
-         *ngFor="let p of cartProducts"  
-         [cartProduct]="p" 
-         (deleted)="onDeleted($event)"></app-cart>
-        <a class="display-4  text-center d-block my-3" [routerLink]="['/order']">Order</a>
+            [isCart]="true"
+            *ngFor="let p of cartProducts"
+            [cartProduct]="p"
+            (deleted)="onDeleted($event)"></app-cart>
+        <a *ngIf="cartProducts.length>0" class="btn btn-primary btn-lg mt-3
+            px-5"
+            [routerLink]="['/order']">Order</a>
     </div>
-   
+
     <hr>
     <div class="row">
-
-        <div class="col-md-12">
-            <div class="container-fluid">
-                <h5>Products </h5>
-                <app-store-filter *ngIf="!searchText"
-                    [category]="category"></app-store-filter>
-                <app-products-search *ngIf="!category"></app-products-search>
-                <div class="row">
-                    <app-store-items
-                        class="col-lg-4 col-md-6 my-3"
-                        *ngFor="let p of products |
-                        search:searchText:'pName'"
-                        [product]="p"></app-store-items>
-                </div>
+        <!-- <h2 class="py-5 text-center">Products </h2> -->
+        <div class="col-lg-2">
+            <app-store-filter *ngIf="!searchText"
+                [category]="category"></app-store-filter>
+        </div>
+        <div class="col-lg-10">
+            <app-products-search *ngIf="!category"></app-products-search>
+            <div class="row">
+                <app-store-items
+                    (onUpdateCartProducts)="updateCartProducts()"
+                    class="col-lg-3 col-md-6 my-3"
+                    *ngFor="let p of products |
+                    search:searchText:'pName'"
+                    [product]="p"></app-store-items>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class SearchPipe implements PipeTransform {
 	products = [];
 	constructor(private productService: ProductService) {}
-	transform(items: Product[], searchText: string, searchKey: string): any {
+	transform(items, searchText: string, searchKey: string): any {
 		if (!searchText) return items;
 		if (!Array.isArray(items)) return [];
 		// console.log(searchText);

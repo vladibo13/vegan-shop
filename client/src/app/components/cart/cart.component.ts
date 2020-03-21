@@ -9,6 +9,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartComponent implements OnInit {
 	isCollapsed = false;
 	@Input() cartProduct;
+	@Input() isCart;
 	@Output() deleted = new EventEmitter<string>();
 	constructor(private cartService: CartService) {}
 

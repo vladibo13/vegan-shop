@@ -59,6 +59,7 @@ export class StoreComponent implements OnInit {
 			}
 		});
 	}
+
 	getProductsByCategory() {
 		this.productService.getAllProductsByCategory(this.category).subscribe((p) => (this.products = p));
 	}
@@ -77,7 +78,8 @@ export class StoreComponent implements OnInit {
 			this.cartProducts = p;
 		});
 	}
-	updateCartProducts() {
+
+	updateCartProducts(event) {
 		this.getCartProducts();
 	}
 	onDeleted(cartID: string) {

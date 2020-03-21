@@ -22,6 +22,8 @@ import { StoreFilterComponent } from './components/store-filter/store-filter.com
 import { StoreModalComponent } from './components/store-modal/store-modal.component';
 import { OrderComponent } from './components/order/order.component';
 import { CartComponent } from './components/cart/cart.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
 	declarations: [
@@ -40,7 +42,9 @@ import { CartComponent } from './components/cart/cart.component';
 		StoreFilterComponent,
 		StoreModalComponent,
 		OrderComponent,
-		CartComponent
+		CartComponent,
+		OrderDetailsComponent,
+		AdminComponent
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [

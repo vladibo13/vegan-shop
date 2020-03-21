@@ -11,6 +11,6 @@
 
     </div>
     <div class="card-footer">
-        <app-store-modal [product]="product"></app-store-modal>
+        <app-store-modal (onUpdateCartProducts)="onUpdateCartProduct()" [product]="product"></app-store-modal>
     </div>
 </div>

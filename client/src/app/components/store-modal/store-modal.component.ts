@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart/cart.service';
@@ -12,10 +12,14 @@ export class StoreModalComponent implements OnInit {
 	amount: number;
 	closeResult: string;
 	@Input() product: Product;
+	@Output() onUpdateCartProducts = new EventEmitter();
 
 	constructor(private modalService: NgbModal, private cartService: CartService) {}
 
 	ngOnInit(): void {}
+	onUpdateCartProduct() {
+		this.onUpdateCartProducts.emit();
+	}
 
 	open(content) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
@@ -38,7 +42,7 @@ export class StoreModalComponent implements OnInit {
 				cartID: localStorage.getItem('cartID')
 			})
 			.subscribe((res) => console.log(res));
-
+		this.onUpdateCartProduct();
 		this.modalService.dismissAll();
 	}
 

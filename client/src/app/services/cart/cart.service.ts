@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,6 +10,12 @@ export class CartService {
 	private cartUrl = 'http://localhost:5000/api/cart';
 	private addProductURL = 'http://localhost:5000/api/cart/addProduct';
 	constructor(private http: HttpClient) {}
+	// private getCartProductsEventSUbject = new BehaviorSubject<any>([]);
+	// data: Observable<any> = this.getCartProductsEventSUbject.asObservable();
+
+	// getCartProductsEvent() {
+	// 	return this.http.get(this.cartUrl).subscribe((data) => this.getCartProductsEventSUbject.next());
+	// }
 
 	createCart(userID: string): Observable<object> {
 		console.log('user id from service', userID);
