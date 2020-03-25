@@ -29,3 +29,16 @@ exports.searchProductByCategory = async (req, res) => {
 		res.status(200).json(filtredProducts);
 	} catch (e) {}
 };
+
+exports.updateProductByID = async (req, res) => {
+	console.log('BODY = ', req.body);
+
+	const { _id, pName, price, imageURL } = req.body;
+	try {
+		const updatedProduct = await Product.updateOne({ _id }, { $set: { pName, price, imageURL } });
+		// updateOne({ _id: ObjectId('0123456789abcdef01234567') }, { $set: { my_test_key4: 4 } });
+		res.json({ msg: 'updated', updatedProduct });
+	} catch (e) {
+		return res.status(400).json(e);
+	}
+};

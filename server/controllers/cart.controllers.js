@@ -27,19 +27,18 @@ exports.addProductToCart = async (req, res) => {
 			price,
 			cartID
 		});
-		res.json(cartInfo);
+		res.status(200).json(cartInfo);
 	} catch (e) {
-		res.json(e);
+		res.status(401).json(e);
 	}
 };
 
 exports.getCartProducts = async (req, res) => {
-	console.log('HIT GET REQUEST');
 	try {
 		const cartProducts = await CartInfo.find({}).populate('productID');
-		res.json(cartProducts);
+		res.status(200).json(cartProducts);
 	} catch (e) {
-		res.json(e);
+		res.status(401).json(e);
 	}
 };
 
@@ -49,6 +48,6 @@ exports.deleteCartProduct = async (req, res) => {
 		const cartProduct = await CartInfo.deleteOne({ _id: cartInfoID });
 		res.status(200).json({ cartProduct, msg: 'deleted' });
 	} catch (e) {
-		return res.status(401).json(e);
+		res.status(401).json(e);
 	}
 };

@@ -9,6 +9,7 @@ import { Category } from 'src/app/models/category';
 })
 export class StoreFilterComponent implements OnInit {
 	@Input() category: string;
+	@Input() isAdmin: boolean;
 	categories: Category;
 
 	constructor(private categoryService: CategoryService) {

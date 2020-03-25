@@ -10,7 +10,11 @@
         <p class="card-text">type: {{product.categoryID.type}}</p>
 
     </div>
-    <div class="card-footer">
-        <app-store-modal (onUpdateCartProducts)="onUpdateCartProduct()" [product]="product"></app-store-modal>
+    <div *ngIf="!isAdmin" class="card-footer">
+        <app-store-modal
+            (onUpdateCartProducts)="onUpdateCartProduct()" [product]="product"></app-store-modal>
+    </div>
+    <div *ngIf="isAdmin" class="card-footer">
+        <button (click)="edit(product)" class="btn btn-block btn-primary">Edit</button>
     </div>
 </div>

@@ -14,8 +14,8 @@ export class OrderDetailsComponent implements OnInit {
 		this.orderDetailsForm = this.fb.group({
 			city: [ '', Validators.required ],
 			street: [ '', Validators.required ],
-			shippingDate: [ '', Validators.required ],
-			creditCard: [ '', Validators.required ]
+			dateOfOrder: [ '', Validators.required ],
+			card: [ '', Validators.required ]
 		});
 	}
 	orderFinalize() {

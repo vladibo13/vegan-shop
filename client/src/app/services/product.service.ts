@@ -30,6 +30,10 @@ export class ProductService {
 		return this.http.get<Product[]>(`${this.productURL}/${searchText}`);
 	}
 
+	updateProductByID(product: Product) {
+		return this.http.put<Product>(`${this.productURL}`, product);
+	}
+
 	private handleError(res: HttpErrorResponse | any) {
 		console.error(res.error || res.body.error);
 		return observableThrowError(res.error || 'Server error');

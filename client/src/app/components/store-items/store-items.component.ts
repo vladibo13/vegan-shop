@@ -8,7 +8,9 @@ import { Product } from 'src/app/models/product';
 })
 export class StoreItemsComponent implements OnInit {
 	@Input() product: Product;
+	@Input() isAdmin: boolean;
 	@Output() onUpdateCartProducts = new EventEmitter();
+	@Output() onEdit = new EventEmitter();
 	constructor() {}
 	onUpdateCartProduct() {
 		this.onUpdateCartProducts.emit();
@@ -16,4 +18,8 @@ export class StoreItemsComponent implements OnInit {
 	ngOnInit(): void {}
 
 	addToCart() {}
+
+	edit(product): void {
+		this.onEdit.emit(product);
+	}
 }

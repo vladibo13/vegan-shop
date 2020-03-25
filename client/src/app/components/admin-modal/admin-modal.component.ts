@@ -1,0 +1,35 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Product } from 'src/app/models/product';
+import { ProductService } from 'src/app/services/product.service';
+
+@Component({
+	selector: 'app-admin-modal',
+	templateUrl: './admin-modal.component.html',
+	styleUrls: [ './admin-modal.component.css' ]
+})
+export class AdminModalComponent implements OnInit {
+	closeResult = '';
+	createProductForm: FormGroup;
+
+	constructor(private modalService: NgbModal, private fb: FormBuilder, private poductService: ProductService) {}
+
+	ngOnInit(): void {
+		this.createProductForm = this.fb.group({
+			name: [ '' ],
+			image: [ '' ],
+			type: [ '' ],
+			price: [ '' ]
+		});
+	}
+
+	open(content) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+	}
+
+	save(product: Product) {
+		console.log('Product ', product);
+		this.modalService.dismissAll();
+	}
+}
