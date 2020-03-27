@@ -2,14 +2,14 @@
 
 <div class="container-fluid">
     <div class="icon text-center my-1">
-        <app-admin-modal></app-admin-modal>
+        <app-admin-modal (onCreate)="updateCartProducts($event)"></app-admin-modal>
     </div>
 
     <div class="container-fluid">
         <h5 class="py-2 text-center">Edit</h5>
         <div *ngIf="selectedProduct">
             {{selectedProduct | json }}
-            
+
             <app-admin-edit [product]="selectedProduct"></app-admin-edit>
         </div>
     </div>

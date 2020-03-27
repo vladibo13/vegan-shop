@@ -9,26 +9,27 @@
     <div class="modal-body">
         <form [formGroup]="createProductForm">
             <div class="form-group">
-                <label >Product Name</label>
+                <label>Product Name</label>
                 <input type="text" class="form-control" formControlName="name">
             </div>
             <div class="form-group">
-                <label >Product Price</label>
-                <input type="text" class="form-control" formControlName="price">
+                <label>Product Price</label>
+                <input type="number" class="form-control"
+                    formControlName="price">
             </div>
             <div class="form-group">
-                <label >Product Category</label>
+                <label>Product Category</label>
                 <input type="text" class="form-control" formControlName="type">
             </div>
             <div class="form-group">
-                <label >Product Image</label>
+                <label>Product Image</label>
                 <input type="text" class="form-control" formControlName="image">
             </div>
         </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark"
-            (click)="save(this.createProductForm.value)">Save</button>
+            (click)="save()">Save</button>
     </div>
 </ng-template>
 

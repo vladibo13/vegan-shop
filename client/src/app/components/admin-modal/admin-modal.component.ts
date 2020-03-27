@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Product } from 'src/app/models/product';
@@ -12,6 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class AdminModalComponent implements OnInit {
 	closeResult = '';
 	createProductForm: FormGroup;
+	@Output() onCreate = new EventEmitter();
 
 	constructor(private modalService: NgbModal, private fb: FormBuilder, private poductService: ProductService) {}
 
@@ -28,8 +29,10 @@ export class AdminModalComponent implements OnInit {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
 	}
 
-	save(product: Product) {
-		console.log('Product ', product);
+	save() {
+		console.log('Product ');
+		this.poductService.createProduct(this.createProductForm.value).subscribe((p) => console.log(p));
+		this.onCreate.emit();
 		this.modalService.dismissAll();
 	}
 }
