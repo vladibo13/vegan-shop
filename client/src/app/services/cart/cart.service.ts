@@ -31,6 +31,10 @@ export class CartService {
 		return this.http.get(this.cartUrl).pipe(map((data) => data));
 	}
 
+	getCartProductsById(cartId: string) {
+		return this.http.get(`${this.cartUrl}/${cartId}`).pipe(map((data) => data));
+	}
+
 	getCart() {
 		return localStorage.getItem('cartID');
 	}

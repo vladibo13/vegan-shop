@@ -8,11 +8,12 @@
     <div class="card-body">
         <h5 class="card-title">{{product.pName}}</h5>
         <p class="card-text">type: {{product.categoryID.type}}</p>
-
+        <p *ngIf="product.price" class="card-text">price: {{product.price |
+            currency:'USD'}}</p>
     </div>
     <div *ngIf="!isAdmin" class="card-footer">
         <app-store-modal
-            (onUpdateCartProducts)="onUpdateCartProduct()" [product]="product"></app-store-modal>
+            (onUpdateCartProducts)="onUpdateCartProduct($event)" [product]="product"></app-store-modal>
     </div>
     <div *ngIf="isAdmin" class="card-footer">
         <button (click)="edit(product)" class="btn btn-block btn-primary">Edit</button>

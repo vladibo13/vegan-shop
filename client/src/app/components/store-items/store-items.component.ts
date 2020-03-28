@@ -12,8 +12,8 @@ export class StoreItemsComponent implements OnInit {
 	@Output() onUpdateCartProducts = new EventEmitter();
 	@Output() onEdit = new EventEmitter();
 	constructor() {}
-	onUpdateCartProduct() {
-		this.onUpdateCartProducts.emit();
+	onUpdateCartProduct(cartId: string) {
+		this.onUpdateCartProducts.emit(cartId);
 	}
 	ngOnInit(): void {}
 

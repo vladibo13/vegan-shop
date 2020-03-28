@@ -9,11 +9,15 @@ import { CartService } from 'src/app/services/cart/cart.service';
 })
 export class OrderComponent implements OnInit {
 	cartProducts: any = [];
+	cartID: string = localStorage.getItem('cartID');
 	constructor(private location: Location, private cartService: CartService) {}
 	getCartProducts() {
-		this.cartService.getCartProducts().subscribe((p) => {
-			console.log('P = ', p);
+		// this.cartService.getCartProducts().subscribe((p) => {
+		// 	console.log('P = ', p);
 
+		// 	this.cartProducts = p;
+		// });
+		this.cartService.getCartProductsById(this.cartID).subscribe((p) => {
 			this.cartProducts = p;
 		});
 	}

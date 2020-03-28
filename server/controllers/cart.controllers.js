@@ -42,6 +42,19 @@ exports.getCartProducts = async (req, res) => {
 	}
 };
 
+exports.getCartProductsByID = async (req, res) => {
+	const { cartId } = req.params;
+	try {
+		const cartProducts = await CartInfo.find({ cartID: cartId }).populate('cartID productID');
+		if (!cartProducts.length) {
+			return res.status(200).json([]);
+		}
+		res.status(200).json(cartProducts);
+	} catch (e) {
+		res.status(401).json(e);
+	}
+};
+
 exports.deleteCartProduct = async (req, res) => {
 	const { cartInfoID } = req.body;
 	try {

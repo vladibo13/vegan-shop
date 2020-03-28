@@ -29,7 +29,7 @@ export class OrderDetailsComponent implements OnInit {
 			card: [ '', Validators.required ]
 		});
 		this.cartID = this.cartService.getCart();
-		this.userId = this.authService.userInfo();
+		this.userId = this.authService.userIdInfo();
 		console.log('CART ID = ', this.cartID);
 		console.log('USER ID = ', this.userId);
 	}
@@ -41,5 +41,6 @@ export class OrderDetailsComponent implements OnInit {
 			.subscribe((c: Order) => {
 				console.log('created order = ', c);
 			});
+		localStorage.removeItem('cartID');
 	}
 }

@@ -38,7 +38,7 @@
             <app-products-search *ngIf="!category"></app-products-search>
             <div class="row">
                 <app-store-items
-                    (onUpdateCartProducts)="updateCartProducts()"
+                    (onUpdateCartProducts)="updateCartProducts($event)"
                     class="col-lg-3 col-md-6 my-3"
                     *ngFor="let p of products |
                     search:searchText:'pName'"

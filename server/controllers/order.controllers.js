@@ -2,6 +2,7 @@ const Order = require('../models/Order');
 
 exports.createOrder = async (req, res) => {
 	const { user, cart, price, city, street, dateOfOrder, card } = req.body;
+	console.log('ORDER BODY = ', req.body);
 	try {
 		const newOrder = await Order.create({
 			user,

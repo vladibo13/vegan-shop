@@ -11,14 +11,15 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class StoreModalComponent implements OnInit {
 	amount: number;
 	closeResult: string;
+	cartID: string = localStorage.getItem('cartID');
 	@Input() product: Product;
 	@Output() onUpdateCartProducts = new EventEmitter();
 
 	constructor(private modalService: NgbModal, private cartService: CartService) {}
 
 	ngOnInit(): void {}
-	onUpdateCartProduct() {
-		this.onUpdateCartProducts.emit();
+	onUpdateCartProduct(cartID: string) {
+		this.onUpdateCartProducts.emit(cartID);
 	}
 
 	open(content) {
@@ -42,7 +43,7 @@ export class StoreModalComponent implements OnInit {
 				cartID: localStorage.getItem('cartID')
 			})
 			.subscribe((res) => console.log(res));
-		this.onUpdateCartProduct();
+		this.onUpdateCartProduct(this.cartID);
 		this.modalService.dismissAll();
 	}
 

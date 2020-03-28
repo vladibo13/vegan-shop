@@ -42,13 +42,14 @@ export class StoreComponent implements OnInit {
 		this.userID = this.authService.userIdInfo();
 
 		if (!this.cartID) {
-			this.cartService.createCart(this.userID).subscribe((user: { _id: string }) => {
-				console.log('user', user);
-				localStorage.setItem('cartID', user._id);
+			this.cartService.createCart(this.userID).subscribe((cart: { _id: string }) => {
+				console.log('cart', cart);
+				localStorage.setItem('cartID', cart._id);
 			});
 		}
 
-		this.getCartProducts();
+		// this.getCartProducts();
+		this.getCartProductsById(this.cartID);
 
 		this.route.queryParamMap.subscribe((params) => {
 			this.category = params.get('category');
@@ -79,15 +80,23 @@ export class StoreComponent implements OnInit {
 		});
 	}
 
-	updateCartProducts(event) {
-		this.getCartProducts();
+	getCartProductsById(cartId: string) {
+		this.cartService.getCartProductsById(cartId).subscribe((p) => {
+			console.log('cart products by id = ', p);
+			this.cartProducts = p;
+		});
+	}
+
+	updateCartProducts(cartId: string) {
+		// this.getCartProducts();
+		this.getCartProductsById(cartId);
 	}
 	onDeleted(cartID: string) {
 		this.cartService.deleteCartProduct(cartID).subscribe((p) => {
 			console.log('product deleted');
 			console.log('Product DELETED ', p);
 		});
-		this.getCartProducts();
+		this.getCartProductsById(this.cartID);
 	}
 	ngOnDestroy(): void {
 		this.unsubscribeSearchTextChanges.unsubscribe();

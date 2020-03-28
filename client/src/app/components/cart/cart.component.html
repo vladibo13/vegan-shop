@@ -5,6 +5,7 @@
         <img [src]="cartProduct.productID.imageURL" class="rounded-circle
             img-fluid card-img-top img-custom">
         {{cartProduct.productID.pName}}
+        {{cartProduct.price}}
         <button *ngIf="isCart" (click)="deleteCartProduct(cartProduct._id)"
             class="btn btn-outline-danger">Delete</button>
     </div>

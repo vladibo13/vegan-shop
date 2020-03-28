@@ -49,12 +49,11 @@ exports.createProduct = async (req, res) => {
 	console.log('new category body', req.body);
 	try {
 		const category = await Category.find({ type });
-		console.log(category);
+
 		//not found
 		if (!category.length) {
-			console.log('inside new category');
 			const newCategory = await Category.create({ type });
-			console.log(newCategory, 'new category');
+
 			const product = await Product.create({
 				pName: name,
 				imageURL: image,
