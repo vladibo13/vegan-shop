@@ -13,7 +13,9 @@ export class CartComponent implements OnInit {
 	@Output() deleted = new EventEmitter<string>();
 	constructor(private cartService: CartService) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		console.log(this.cartProduct);
+	}
 
 	deleteCartProduct(cartID: string) {
 		this.deleted.emit(cartID);

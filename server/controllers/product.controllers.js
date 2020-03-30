@@ -33,12 +33,19 @@ exports.searchProductByCategory = async (req, res) => {
 
 exports.updateProductByID = async (req, res) => {
 	console.log('BODY = ', req.body);
-
-	const { _id, pName, price, imageURL } = req.body;
+	const { _id, pName, price, imageURL, type, typeID } = req.body;
 	try {
+		const category = await Category.find({ type });
+		if (!category.length) {
+			const newCategory = await Category.create({ type });
+			const updatedProduct = await Product.updateOne(
+				{ _id },
+				{ $set: { pName, price, imageURL, categoryID: newCategory._id } }
+			);
+			return res.json({ msg: 'updated, new category created', updatedProduct });
+		}
 		const updatedProduct = await Product.updateOne({ _id }, { $set: { pName, price, imageURL } });
-		// updateOne({ _id: ObjectId('0123456789abcdef01234567') }, { $set: { my_test_key4: 4 } });
-		res.json({ msg: 'updated', updatedProduct });
+		res.json({ msg: 'updated, no category created', updatedProduct });
 	} catch (e) {
 		return res.status(400).json(e);
 	}

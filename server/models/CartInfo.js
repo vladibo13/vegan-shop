@@ -6,7 +6,7 @@ const cartInfo = new mongoose.Schema(
 		amount: {
 			type: Number
 		},
-		price: {
+		totalPrice: {
 			type: Number
 		},
 		cartID: {

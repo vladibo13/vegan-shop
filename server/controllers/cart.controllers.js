@@ -1,5 +1,6 @@
 const Cart = require('../models/Cart');
 const CartInfo = require('../models/CartInfo');
+const Product = require('../models/Product');
 // const User = require('../models/User');
 
 exports.ifCartExist = async (req, res) => {
@@ -21,10 +22,11 @@ exports.addProductToCart = async (req, res) => {
 	const { productID, amount, price, cartID } = req.body;
 	console.log('BODY = ', req.body);
 	try {
+		const product = await Product.find({ _id: productID });
 		const cartInfo = await CartInfo.create({
 			productID,
 			amount,
-			price,
+			totalPrice: price * product[0].price,
 			cartID
 		});
 		res.status(200).json(cartInfo);

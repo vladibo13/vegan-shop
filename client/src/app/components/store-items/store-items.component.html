@@ -16,6 +16,7 @@
             (onUpdateCartProducts)="onUpdateCartProduct($event)" [product]="product"></app-store-modal>
     </div>
     <div *ngIf="isAdmin" class="card-footer">
-        <button (click)="edit(product)" class="btn btn-block btn-primary">Edit</button>
+        <!-- <button (click)="edit(product)" class="btn btn-block btn-primary">Edit</button> -->
+        <app-admin-edit [product]="product"></app-admin-edit>
     </div>
 </div>

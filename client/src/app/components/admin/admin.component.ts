@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
 		});
 	}
 
-	onEdit(product): void {
+	onEdit(product: Product): void {
 		this.selectedProduct = product;
 	}
 

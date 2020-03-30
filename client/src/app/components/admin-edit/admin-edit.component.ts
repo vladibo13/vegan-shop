@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/models/product';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-admin-edit',
@@ -8,14 +10,50 @@ import { ProductService } from 'src/app/services/product.service';
 	styleUrls: [ './admin-edit.component.css' ]
 })
 export class AdminEditComponent implements OnInit {
-	@Input() product;
+	@Input() product: Product;
+	editForm: FormGroup;
 
-	constructor(private fb: FormBuilder, private productService: ProductService) {}
+	closeResult = '';
 
-	ngOnInit(): void {}
+	constructor(private modalService: NgbModal, private fb: FormBuilder, private productService: ProductService) {}
 
-	edit() {
-		console.log('EDITING = ', this.product);
-		this.productService.updateProductByID(this.product).subscribe();
+	open(content) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			}
+		);
+		console.log('EDIT MODAL PRODUCT', this.product);
+	}
+
+	private getDismissReason(reason: any): string {
+		if (reason === ModalDismissReasons.ESC) {
+			return 'by pressing ESC';
+		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+			return 'by clicking on a backdrop';
+		} else {
+			return `with: ${reason}`;
+		}
+	}
+
+	ngOnInit(): void {
+		this.editForm = this.fb.group({
+			pName: [ this.product.pName ],
+			type: [ this.product.categoryID.type ],
+			imageURL: [ this.product.imageURL ],
+			price: [ this.product.price ]
+		});
+	}
+
+	edit(): void {
+		console.log('editing...', this.editForm.value);
+		this.modalService.dismissAll();
+		// console.log('EDITING = ', this.product);
+		this.productService
+			.updateProductByID({ ...this.editForm.value, _id: this.product._id, typeID: this.product.categoryID._id })
+			.subscribe((result) => console.log('Result ', result));
 	}
 }

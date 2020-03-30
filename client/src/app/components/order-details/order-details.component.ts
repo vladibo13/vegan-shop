@@ -34,7 +34,8 @@ export class OrderDetailsComponent implements OnInit {
 		console.log('USER ID = ', this.userId);
 	}
 
-	orderFinalize() {
+	orderFinalize(): void {
+		if (!this.orderDetailsForm.valid) return;
 		console.log(this.orderDetailsForm.value);
 		this.orderService
 			.createOrder({ ...this.orderDetailsForm.value, cart: this.cartID, user: this.userId })
@@ -42,5 +43,18 @@ export class OrderDetailsComponent implements OnInit {
 				console.log('created order = ', c);
 			});
 		localStorage.removeItem('cartID');
+	}
+
+	get city() {
+		return this.orderDetailsForm.get('city');
+	}
+	get street() {
+		return this.orderDetailsForm.get('street');
+	}
+	get dateOfOrder() {
+		return this.orderDetailsForm.get('dateOfOrder');
+	}
+	get card() {
+		return this.orderDetailsForm.get('card');
 	}
 }

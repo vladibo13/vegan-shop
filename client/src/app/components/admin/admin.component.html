@@ -5,14 +5,14 @@
         <app-admin-modal (onCreate)="updateCartProducts($event)"></app-admin-modal>
     </div>
 
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
         <h5 class="py-2 text-center">Edit</h5>
         <div *ngIf="selectedProduct">
             {{selectedProduct | json }}
 
-            <app-admin-edit [product]="selectedProduct"></app-admin-edit>
+            <app-admin-edit *ngFor="let p of products" [product]="p"></app-admin-edit>
         </div>
-    </div>
+    </div> -->
 
 
     <hr>
