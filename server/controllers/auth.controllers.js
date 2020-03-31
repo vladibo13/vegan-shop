@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
 
 	try {
 		console.log('login');
-		const user = await User.findOne({ email }).select('name password ');
+		const user = await User.findOne({ email }).select('name password role');
 
 		if (!user) {
 			return res.status(401).json(invalid);
@@ -72,8 +72,8 @@ exports.login = async (req, res) => {
 		}
 
 		const token = await getJwt({ ...req.body, password: null });
-
-		return res.status(201).json({ token, user: user });
+		const finalUser = await User.findOne({ email }).select('name role');
+		return res.status(201).json({ token, user: finalUser });
 	} catch (e) {
 		console.log(e);
 		res.status(500).end();

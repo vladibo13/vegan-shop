@@ -81,6 +81,7 @@ export class StoreComponent implements OnInit {
 	}
 
 	getCartProductsById(cartId: string) {
+		if (cartId === null) return;
 		this.cartService.getCartProductsById(cartId).subscribe((p) => {
 			console.log('cart products by id = ', p);
 			this.cartProducts = p;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../models/user';
-import { Observable, throwError as observableThrowError } from 'rxjs';
+import { Observable, throwError as observableThrowError, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -13,8 +13,14 @@ export class AuthService {
 	private user: string;
 	private token: string;
 	private isAuthenticated = false;
+	private isAdmin = false;
+	private authStatusListener = new Subject<boolean>();
 
 	constructor(private http: HttpClient, private router: Router) {}
+
+	getAuthStatusListener() {
+		return this.authStatusListener.asObservable();
+	}
 
 	getToken() {
 		return this.token;
@@ -22,6 +28,9 @@ export class AuthService {
 
 	getIsAuth() {
 		return this.isAuthenticated;
+	}
+	getIsAdmin() {
+		return this.isAdmin;
 	}
 
 	// register
@@ -33,18 +42,22 @@ export class AuthService {
 	}
 
 	//login
-	loginUser(user: object): Observable<boolean> {
+	loginUser(user: object): Observable<string> {
 		return this.http
-			.post<{ token: string; user: { name: string; _id: string } }>(`${this.shopUrl}/login`, user)
+			.post<{ token: string; user: { name: string; _id: string; role: string } }>(`${this.shopUrl}/login`, user)
 			.pipe(
 				map((response) => {
-					console.log(response);
+					console.log('RESPONSE', response);
 					const { token, user } = response;
 					if (token) {
+						console.log('LOGIN = ', user);
+						this.token = token;
 						localStorage.setItem('token', token);
 						localStorage.setItem('user', user.name);
 						localStorage.setItem('userID', user._id);
-						return true;
+						this.isAuthenticated = true;
+						this.authStatusListener.next(true);
+						return user.role;
 					}
 				}),
 				catchError(this.handleError)
