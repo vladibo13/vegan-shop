@@ -2,35 +2,31 @@
 <div class="container-fluid">
     <div class="card my-2">
         <div class="card-body">
-           <div class="row">
-               <div class="col-2">
-                    <img [src]="cartProduct.productID.imageURL" class="rounded-circle
-                    img-fluid card-img-top img-custom">
-               </div>
-               <div class="col-2">
+            <div class="row">
+                <div class="col-2">
+                    <img [src]="cartProduct.productID.imageURL"
+                        class="rounded-circle
+                        img-fluid card-img-top img-custom">
+                </div>
+                <div class="col-2">
                     <p>amount: {{cartProduct.amount}}</p>
                 </div>
                 <div class="col-2">
                     <span>{{cartProduct.productID.pName}}</span>
                 </div>
                 <div class="col-2">
-                    <span>price: {{cartProduct.productID.price |  currency:'USD'}}</span>
+                    <span>price: {{cartProduct.productID.price |
+                        currency:'USD'}}</span>
                 </div>
                 <div class="col-2">
-                    <span>total: {{cartProduct.totalPrice |  currency:'USD'}}</span>
+                    <span>total: {{cartProduct.totalPrice | currency:'USD'}}</span>
                 </div>
                 <div class="col-2">
-                    <button *ngIf="isCart" (click)="deleteCartProduct(cartProduct._id)"
-                class="btn btn-outline-danger">Delete</button>
+                    <button *ngIf="isCart"
+                        (click)="deleteCartProduct(cartProduct._id)"
+                        class="btn btn-outline-danger">Delete</button>
                 </div>
-           </div>
-           
-          
-          
-          
-          
-           
+            </div>
         </div>
     </div>
 </div>
-

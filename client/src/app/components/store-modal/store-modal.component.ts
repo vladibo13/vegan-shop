@@ -42,8 +42,8 @@ export class StoreModalComponent implements OnInit {
 				price: this.amount,
 				cartID: localStorage.getItem('cartID')
 			})
-			.subscribe((res) => console.log(res));
-		this.onUpdateCartProduct(this.cartID);
+			.subscribe((res) => this.onUpdateCartProduct(this.cartID));
+
 		this.modalService.dismissAll();
 	}
 

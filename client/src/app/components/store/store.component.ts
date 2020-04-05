@@ -96,8 +96,8 @@ export class StoreComponent implements OnInit {
 		this.cartService.deleteCartProduct(cartID).subscribe((p) => {
 			console.log('product deleted');
 			console.log('Product DELETED ', p);
+			this.getCartProductsById(this.cartID);
 		});
-		this.getCartProductsById(this.cartID);
 	}
 	ngOnDestroy(): void {
 		this.unsubscribeSearchTextChanges.unsubscribe();
