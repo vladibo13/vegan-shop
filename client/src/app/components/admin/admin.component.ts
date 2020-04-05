@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
 
 		this.userID = this.authService.userIdInfo();
 
-		this.getCartProducts();
+		// this.getCartProducts();
 
 		this.route.queryParamMap.subscribe((params) => {
 			this.category = params.get('category');
@@ -53,8 +53,8 @@ export class AdminComponent implements OnInit {
 		});
 	}
 
-	onEdit(product: Product): void {
-		this.selectedProduct = product;
+	onEdit(): void {
+		this.getProducts();
 	}
 
 	getProductsByCategory() {

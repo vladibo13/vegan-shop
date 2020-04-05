@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent implements OnInit, OnDestroy {
 	public isMenuCollapsed = true;
 	public userIsAuth = false;
-	public isAuth;
+	public isAuth = null;
 
 	private authListenerSubs: Subscription;
 

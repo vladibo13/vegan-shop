@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
@@ -11,6 +11,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AdminEditComponent implements OnInit {
 	@Input() product: Product;
+	@Output() onEdit = new EventEmitter();
 	editForm: FormGroup;
 
 	closeResult = '';
@@ -50,10 +51,10 @@ export class AdminEditComponent implements OnInit {
 
 	edit(): void {
 		console.log('editing...', this.editForm.value);
-		this.modalService.dismissAll();
-		// console.log('EDITING = ', this.product);
 		this.productService
 			.updateProductByID({ ...this.editForm.value, _id: this.product._id, typeID: this.product.categoryID._id })
-			.subscribe((result) => console.log('Result ', result));
+			.subscribe(() => this.onEdit.emit());
+		this.modalService.dismissAll();
+		// console.log('EDITING = ', this.product);
 	}
 }

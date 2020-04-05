@@ -19,7 +19,7 @@ app.use(urlencoded({ extended: true }));
 app.use('/api/test', testRouter);
 app.use('/api/auth', authRouter);
 
-// app.use('/api', verifyAuth);
+app.use('/api', verifyAuth);
 app.use('/api/product', productRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/cart', cartRouter);

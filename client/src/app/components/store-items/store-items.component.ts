@@ -19,7 +19,7 @@ export class StoreItemsComponent implements OnInit {
 
 	addToCart() {}
 
-	edit(product): void {
-		this.onEdit.emit(product);
+	edit(): void {
+		this.onEdit.emit();
 	}
 }
