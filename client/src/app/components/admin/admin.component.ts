@@ -76,8 +76,8 @@ export class AdminComponent implements OnInit {
 		});
 	}
 
-	updateCartProducts(event) {
-		this.getCartProducts();
+	updateProducts(event): void {
+		this.getProducts();
 	}
 
 	ngOnDestroy(): void {

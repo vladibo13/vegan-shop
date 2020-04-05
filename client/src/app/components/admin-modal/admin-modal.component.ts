@@ -31,8 +31,8 @@ export class AdminModalComponent implements OnInit {
 
 	save() {
 		console.log('Product ');
-		this.poductService.createProduct(this.createProductForm.value).subscribe((p) => console.log(p));
-		this.onCreate.emit();
+		this.poductService.createProduct(this.createProductForm.value).subscribe((p) => this.onCreate.emit());
+
 		this.modalService.dismissAll();
 	}
 }
