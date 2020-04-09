@@ -9,6 +9,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 })
 export class OrderComponent implements OnInit {
 	cartProducts: any = [];
+	totalPrice: string;
 	cartID: string = localStorage.getItem('cartID');
 	constructor(private location: Location, private cartService: CartService) {}
 	getCartProducts() {
@@ -21,10 +22,15 @@ export class OrderComponent implements OnInit {
 			this.cartProducts = p;
 		});
 	}
+
+	getTotalPrice(): void {
+		this.cartService.getTotalPrice().subscribe((price: string) => (this.totalPrice = price));
+	}
 	goBack() {
 		this.location.back();
 	}
 	ngOnInit(): void {
 		this.getCartProducts();
+		this.getTotalPrice();
 	}
 }

@@ -22,6 +22,7 @@ export class StoreComponent implements OnInit {
 	cartID: string = localStorage.getItem('cartID');
 	userID: string;
 	isCollapsed = false;
+	totalPrice: string;
 
 	constructor(
 		private productService: ProductService,
@@ -50,7 +51,7 @@ export class StoreComponent implements OnInit {
 
 		// this.getCartProducts();
 		this.getCartProductsById(this.cartID);
-
+		this.getTotalPrice();
 		this.route.queryParamMap.subscribe((params) => {
 			this.category = params.get('category');
 			if (this.category) {
@@ -101,5 +102,9 @@ export class StoreComponent implements OnInit {
 	}
 	ngOnDestroy(): void {
 		this.unsubscribeSearchTextChanges.unsubscribe();
+	}
+
+	getTotalPrice() {
+		this.cartService.getTotalPrice().subscribe((total: string) => (this.totalPrice = total));
 	}
 }

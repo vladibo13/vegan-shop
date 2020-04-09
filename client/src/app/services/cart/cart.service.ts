@@ -52,4 +52,7 @@ export class CartService {
 	}
 
 	addToCart(product: object) {}
+	getTotalPrice() {
+		return this.http.get(`${this.cartUrl}/price/total`);
+	}
 }

@@ -66,3 +66,15 @@ exports.deleteCartProduct = async (req, res) => {
 		res.status(401).json(e);
 	}
 };
+
+exports.getTotalPrice = async (req, res) => {
+	try {
+		const cartProducts = await CartInfo.find({});
+		const totalPrice = cartProducts.reduce((total, current) => {
+			return total + current.totalPrice;
+		}, 0);
+		res.status(200).json(totalPrice);
+	} catch (e) {
+		res.status(401).json(e);
+	}
+};
