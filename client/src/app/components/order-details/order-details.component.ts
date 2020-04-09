@@ -4,6 +4,7 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { Order } from 'src/app/models/order';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user';
 
 @Component({
 	selector: 'app-order-details',
@@ -45,6 +46,21 @@ export class OrderDetailsComponent implements OnInit {
 		localStorage.removeItem('cartID');
 	}
 
+	getCity(): void {
+		// this.orderDetailsForm.controls.city.setValue()
+		// this.orderDetailsForm.controls.city.setValue(user.city)
+		console.log('USERID = ', this.userId);
+
+		this.authService
+			.getUserDetails(this.userId)
+			.subscribe((user: User) => this.orderDetailsForm.controls.city.setValue(user.city));
+	}
+
+	getStreet(): void {
+		this.authService
+			.getUserDetails(this.userId)
+			.subscribe((user: User) => this.orderDetailsForm.controls.street.setValue(user.street));
+	}
 	get city() {
 		return this.orderDetailsForm.get('city');
 	}

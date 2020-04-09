@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 	private shopUrl = 'http://localhost:5000/api/auth';
-	private user: string;
 	private token: string;
 	private isAuthenticated = false;
 	private isAdmin = false;
@@ -73,7 +72,11 @@ export class AuthService {
 	}
 
 	userIdInfo() {
-		return localStorage.getItem('userId');
+		return localStorage.getItem('userID');
+	}
+
+	getUserDetails(id: string): Observable<User> {
+		return this.http.get<User>(`${this.shopUrl}/user/${id}`);
 	}
 
 	private handleError(res: HttpErrorResponse | any) {

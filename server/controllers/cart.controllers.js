@@ -68,8 +68,9 @@ exports.deleteCartProduct = async (req, res) => {
 };
 
 exports.getTotalPrice = async (req, res) => {
+	const { id } = req.params;
 	try {
-		const cartProducts = await CartInfo.find({});
+		const cartProducts = await CartInfo.find({ cartID: id });
 		const totalPrice = cartProducts.reduce((total, current) => {
 			return total + current.totalPrice;
 		}, 0);

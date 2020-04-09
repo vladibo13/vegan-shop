@@ -79,3 +79,13 @@ exports.login = async (req, res) => {
 		res.status(500).end();
 	}
 };
+
+exports.getLoggedUser = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await User.findById({ _id: id }).select('-password');
+		res.status(200).json(user);
+	} catch (e) {
+		res.status(401).json(e);
+	}
+};

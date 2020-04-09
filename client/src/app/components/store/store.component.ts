@@ -51,7 +51,7 @@ export class StoreComponent implements OnInit {
 
 		// this.getCartProducts();
 		this.getCartProductsById(this.cartID);
-		this.getTotalPrice();
+		this.getTotalPrice(this.cartID);
 		this.route.queryParamMap.subscribe((params) => {
 			this.category = params.get('category');
 			if (this.category) {
@@ -82,10 +82,11 @@ export class StoreComponent implements OnInit {
 	}
 
 	getCartProductsById(cartId: string) {
-		if (cartId === null) return;
+		if (!cartId) return;
 		this.cartService.getCartProductsById(cartId).subscribe((p) => {
 			console.log('cart products by id = ', p);
 			this.cartProducts = p;
+			this.getTotalPrice(this.cartID);
 		});
 	}
 
@@ -104,7 +105,7 @@ export class StoreComponent implements OnInit {
 		this.unsubscribeSearchTextChanges.unsubscribe();
 	}
 
-	getTotalPrice() {
-		this.cartService.getTotalPrice().subscribe((total: string) => (this.totalPrice = total));
+	getTotalPrice(id: string) {
+		this.cartService.getTotalPrice(id).subscribe((total: string) => (this.totalPrice = total));
 	}
 }
