@@ -5,6 +5,7 @@ import { Order } from 'src/app/models/order';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-order-details',
@@ -19,7 +20,8 @@ export class OrderDetailsComponent implements OnInit {
 		private fb: FormBuilder,
 		private orderService: OrderService,
 		private cartService: CartService,
-		private authService: AuthService
+		private authService: AuthService,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {
@@ -42,8 +44,9 @@ export class OrderDetailsComponent implements OnInit {
 			.createOrder({ ...this.orderDetailsForm.value, cart: this.cartID, user: this.userId })
 			.subscribe((c: Order) => {
 				console.log('created order = ', c);
+				localStorage.removeItem('cartID');
+				this.router.navigate([ '/ordersuccess' ]);
 			});
-		localStorage.removeItem('cartID');
 	}
 
 	getCity(): void {

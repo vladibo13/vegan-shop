@@ -84,3 +84,12 @@ exports.createProduct = async (req, res) => {
 		return res.status(400).json(e);
 	}
 };
+
+exports.amountOfProducts = async (req, res) => {
+	try {
+		const products = await Product.countDocuments({});
+		res.status(200).json(products);
+	} catch (e) {
+		res.status(401).json(e);
+	}
+};

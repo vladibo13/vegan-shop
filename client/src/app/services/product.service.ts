@@ -38,6 +38,10 @@ export class ProductService {
 		return this.http.post<Product>(`${this.productURL}`, product);
 	}
 
+	getAmountOfProducts(): Observable<number> {
+		return this.http.get<number>(`${this.productURL}/t/p`);
+	}
+
 	private handleError(res: HttpErrorResponse | any) {
 		console.error(res.error || res.body.error);
 		return observableThrowError(res.error || 'Server error');

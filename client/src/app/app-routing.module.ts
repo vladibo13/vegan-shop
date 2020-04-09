@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { OrderComponent } from './components/order/order.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
+import { OrderSuccessComponent } from './components/order-success/order-success.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'store', component: StoreComponent, canActivate: [ AuthGuard ] },
 	{ path: 'order', component: OrderComponent, canActivate: [ AuthGuard ] },
+	{ path: 'ordersuccess', component: OrderSuccessComponent, canActivate: [ AuthGuard ] },
 	{ path: 'admin', component: AdminComponent, canActivate: [ AdminGuard ], data: { role: 'admin' } }
 ];
 

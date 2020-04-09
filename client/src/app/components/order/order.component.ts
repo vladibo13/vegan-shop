@@ -24,7 +24,7 @@ export class OrderComponent implements OnInit {
 	}
 
 	getTotalPrice(): void {
-		this.cartService.getTotalPrice().subscribe((price: string) => (this.totalPrice = price));
+		this.cartService.getTotalPrice(this.cartID).subscribe((price: string) => (this.totalPrice = price));
 	}
 	goBack() {
 		this.location.back();

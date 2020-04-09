@@ -5,6 +5,7 @@ const productController = require('../controllers/product.controllers');
 router.get('/', productController.getAllProducts);
 router.get('/s/c', productController.searchProductByCategory);
 router.get('/:search', productController.searchByInput);
+router.get('/t/p', productController.amountOfProducts);
 router.put('/', productController.updateProductByID);
 router.post('/', productController.createProduct);
 

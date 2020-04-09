@@ -99,6 +99,7 @@ export class StoreComponent implements OnInit {
 			console.log('product deleted');
 			console.log('Product DELETED ', p);
 			this.getCartProductsById(this.cartID);
+			this.getTotalPrice(this.cartID);
 		});
 	}
 	ngOnDestroy(): void {

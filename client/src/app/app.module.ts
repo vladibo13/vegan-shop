@@ -26,6 +26,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminModalComponent } from './components/admin-modal/admin-modal.component';
 import { AdminEditComponent } from './components/admin-edit/admin-edit.component';
+import { OrderSuccessComponent } from './components/order-success/order-success.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import { AdminEditComponent } from './components/admin-edit/admin-edit.component
 		OrderDetailsComponent,
 		AdminComponent,
 		AdminModalComponent,
-		AdminEditComponent
+		AdminEditComponent,
+		OrderSuccessComponent
 	],
 	imports: [ BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, NgbModule ],
 	providers: [
