@@ -9,6 +9,14 @@
 
     <!-- Step 2: Add the ngbCollapse directive to the element below. -->
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li *ngIf="isAuth" class="nav-item">
+                <a class="nav-link" [routerLink]="['/store']"
+                    (click)="isMenuCollapsed=
+                    true">Store</a>
+            </li>
+        </ul>
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <!-- Step 4: Close the menu when a link is clicked. -->
@@ -23,12 +31,12 @@
                     true">Register</a>
             </li>
             <li *ngIf="isAuth" class="nav-item">
-                <a class="nav-link" [routerLink]="['/store']"
-                    (click)="isMenuCollapsed=
-                    true">Store</a>
+                <a class="nav-link" style="cursor: pointer;"
+                    (click)="logout()">Logout</a>
             </li>
-
         </ul>
+
+
     </div>
 
 
