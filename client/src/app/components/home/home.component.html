@@ -3,13 +3,12 @@
         <div class="col-md-4 col-sm-12 border mb-3">
             <app-login *ngIf="!isLoggedIn"></app-login>
             <h6 *ngIf="isLoggedIn && user">Welcome Back {{user}} </h6>
-            <p *ngIf="user">{{user}}</p>
         </div>
         <div class="col-md-4 col-sm-12 border mb-4">
             <app-about></app-about>
         </div>
         <div class="col-md-4 col-sm-12 border mb-4">
-            <app-shop-description></app-shop-description>
+            <app-shop-description isOpenCart="isOpenCart"></app-shop-description>
         </div>
     </div>
 </div>

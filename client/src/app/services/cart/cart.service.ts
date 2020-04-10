@@ -52,8 +52,13 @@ export class CartService {
 	}
 
 	addToCart(product: object) {}
+
 	getTotalPrice(id: string) {
 		if (!id) return;
 		return this.http.get(`${this.cartUrl}/totalPrice/${id}`);
+	}
+
+	isOpenCart(): boolean {
+		return !!localStorage.getItem('cartID');
 	}
 }
