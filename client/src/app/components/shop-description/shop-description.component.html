@@ -8,6 +8,6 @@
 <p>open cart from [date] / your last purchase on [date] / welcome [name]</p>
 <p *ngIf="isOpenCart">You have open cart, with total price of {{totalPrice |
     currency:'USD'}} <a
-        [routerLink]="['/shop']">continue
+        [routerLink]="['/store']">continue
         shopping</a></p>
-<p *ngIf="!isOpenCart"><a [routerLink]="['/shop']">start shopping</a></p>
+<p *ngIf="!isOpenCart"><a [routerLink]="['/store']">start shopping</a></p>

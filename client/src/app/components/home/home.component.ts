@@ -19,5 +19,6 @@ export class HomeComponent implements OnInit {
 		this.isOpenCart = this.cartService.isOpenCart();
 		console.log(this.isLoggedIn);
 		console.log('user = ', this.user);
+		console.log('home isopencart = ', this.isOpenCart);
 	}
 }

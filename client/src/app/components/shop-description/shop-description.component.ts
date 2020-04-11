@@ -23,13 +23,17 @@ export class ShopDescriptionComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
+		console.log('IS OPEN CART ', this.isOpenCart);
 		this.productService.getAmountOfProducts().subscribe((amount: number) => {
+			if (!amount) return;
 			this.amountOfProductInDB = amount;
 		});
 		this.orderService.getAmountOfOrders().subscribe((amount: number) => {
+			if (!amount) return;
 			this.amountOfOrdersInDB = amount;
 		});
 
+		if (!this.cartID) return;
 		this.cartService.getTotalPrice(this.cartID).subscribe((total: number) => {
 			this.totalPrice = total;
 		});

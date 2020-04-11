@@ -92,6 +92,7 @@ export class StoreComponent implements OnInit {
 
 	updateCartProducts(cartId: string) {
 		// this.getCartProducts();
+		this.getTotalPrice(this.cartID);
 		this.getCartProductsById(cartId);
 	}
 	onDeleted(cartID: string) {
@@ -107,6 +108,7 @@ export class StoreComponent implements OnInit {
 	}
 
 	getTotalPrice(id: string) {
+		if (!id) return;
 		this.cartService.getTotalPrice(id).subscribe((total: string) => (this.totalPrice = total));
 	}
 }
