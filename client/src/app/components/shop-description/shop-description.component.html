@@ -4,7 +4,7 @@
     alt="vegan shop">
 
 <p>Available products in our store: {{amountOfProductInDB}}</p>
-<p>Number of orders submited to our store {{amountOfOrdersInDB}}</p>
+<p>Number of orders submited to our store: {{amountOfOrdersInDB}}</p>
 <p>open cart from [date] / your last purchase on [date] / welcome [name]</p>
 <p *ngIf="isOpenCart">You have open cart, with total price of {{totalPrice |
     currency:'USD'}} <a

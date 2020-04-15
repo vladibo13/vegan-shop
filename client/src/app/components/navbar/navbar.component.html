@@ -16,6 +16,11 @@
                     (click)="isMenuCollapsed=
                     true">Store</a>
             </li>
+            <li *ngIf="isAuth && isAdmin" class="nav-item">
+                <a class="nav-link" [routerLink]="['/admin']"
+                    (click)="isMenuCollapsed=
+                    true">Admin</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item active">

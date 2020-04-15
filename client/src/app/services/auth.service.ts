@@ -54,6 +54,7 @@ export class AuthService {
 						localStorage.setItem('token', token);
 						localStorage.setItem('user', user.name);
 						localStorage.setItem('userID', user._id);
+						localStorage.setItem('role', user.role);
 						this.isAuthenticated = true;
 						this.authStatusListener.next(true);
 						return user.role;
@@ -69,6 +70,10 @@ export class AuthService {
 
 	isLoggedIn() {
 		return !!localStorage.getItem('token');
+	}
+
+	isAdminLogged() {
+		return localStorage.getItem('role') === 'admin';
 	}
 
 	userIdInfo() {

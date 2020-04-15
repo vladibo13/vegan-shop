@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // process.env.DB_URL,
 module.exports = () => {
 	return mongoose.connect(
-		process.env.DB_URL,
+		process.env.DB_URL_LOCAL,
 		{
 			useUnifiedTopology: true,
 			useNewUrlParser: true,

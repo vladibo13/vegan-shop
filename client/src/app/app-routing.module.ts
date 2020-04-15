@@ -17,7 +17,7 @@ const routes: Routes = [
 	{ path: 'store', component: StoreComponent, canActivate: [ AuthGuard ] },
 	{ path: 'order', component: OrderComponent, canActivate: [ AuthGuard ] },
 	{ path: 'ordersuccess', component: OrderSuccessComponent, canActivate: [ AuthGuard ] },
-	{ path: 'admin', component: AdminComponent, canActivate: [ AdminGuard ], data: { role: 'admin' } }
+	{ path: 'admin', component: AdminComponent, canActivate: [ AuthGuard ], data: { role: 'admin' } }
 ];
 
 @NgModule({

@@ -25,19 +25,18 @@ export class LoginComponent implements OnInit {
 		return this.loginForm.get('password');
 	}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.loginForm = this.fb.group({
 			email: [ '', [ Validators.required, Validators.email ] ],
 			password: [ '', Validators.required ]
 		});
 	}
 
-	onLogin() {
+	onLogin(): void {
 		this.submitted = true;
-		console.warn(this.loginForm.value);
 		this.authService.loginUser(this.loginForm.value).subscribe(
 			(role: string) => {
-				console.log('role === ', role);
+				console.log(role);
 				if (role === 'admin') {
 					this.router.navigate([ '/admin' ]);
 					return;
@@ -46,7 +45,6 @@ export class LoginComponent implements OnInit {
 			},
 			(e) => {
 				this.error = e.message;
-				console.log(this.error);
 			}
 		);
 	}

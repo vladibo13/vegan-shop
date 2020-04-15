@@ -12,10 +12,15 @@ export class AuthGuard implements CanActivate {
 	canActivate(route: ActivatedRouteSnapshot): boolean {
 		const role = route.data.role;
 		const isAuth = this.authService.isLoggedIn();
-		if (!isAuth || role === 'admin') {
+		const isAdmin = this.authService.isAdminLogged();
+		console.log('GUARD ROLE', role);
+
+		if (!isAuth || (role && !isAdmin)) {
 			this.router.navigate([ '/register' ]);
 			return false;
 		}
 		return true;
 	}
 }
+// const currentUser = this.authService.currentUserValue;
+// const role = route.data.roles;
