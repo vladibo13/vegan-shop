@@ -16,10 +16,10 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.use('/api/test', testRouter);
+// app.use('/api/test', testRouter);
 app.use('/api/auth', authRouter);
 
-// app.use('/api', verifyAuth);
+app.use('/api', verifyAuth);
 app.use('/api/product', productRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/cart', cartRouter);
@@ -28,7 +28,7 @@ app.use('/api/order', orderRouter);
 module.exports = async () => {
 	try {
 		await connect();
-		app.listen(process.env.PORT, () => {
+		app.listen(process.env.PORT || 8080, () => {
 			console.log(`REST API on http://localhost:${process.env.PORT}/api`);
 		});
 	} catch (e) {
