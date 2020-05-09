@@ -1,91 +1,109 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { User } from '../models/user';
-import { Observable, throwError as observableThrowError, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { User } from "../models/user";
+import { Observable, throwError as observableThrowError, Subject } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { Router } from "@angular/router";
+
+interface emailAvailableResponse {
+  exist: boolean;
+}
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-	private shopUrl = 'http://localhost:5000/api/auth';
-	private token: string;
-	private isAuthenticated = false;
-	private isAdmin = false;
-	private authStatusListener = new Subject<boolean>();
+  private shopUrl = "http://localhost:5000/api/auth";
+  private token: string;
+  private isAuthenticated = false;
+  private isAdmin = false;
+  private authStatusListener = new Subject<boolean>();
 
-	constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-	getAuthStatusListener() {
-		return this.authStatusListener.asObservable();
-	}
+  emailAvailable(email: string) {
+    return this.http.post<emailAvailableResponse>(
+      "http://localhost:5000/api/auth/username",
+      {
+        username: email,
+      }
+    );
+  }
 
-	getToken() {
-		return this.token;
-	}
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
 
-	getIsAuth() {
-		return this.isAuthenticated;
-	}
-	getIsAdmin() {
-		return this.isAdmin;
-	}
+  getToken() {
+    return this.token;
+  }
 
-	// register
-	createUser(user: User): Observable<User> {
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+  getIsAdmin() {
+    return this.isAdmin;
+  }
 
-		return this.http.post<User>(`${this.shopUrl}/register`, user).pipe(catchError(this.handleError));
-	}
+  // register
+  createUser(user: User): Observable<User> {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
 
-	//login
-	loginUser(user: object): Observable<string> {
-		return this.http
-			.post<{ token: string; user: { name: string; _id: string; role: string } }>(`${this.shopUrl}/login`, user)
-			.pipe(
-				map((response) => {
-					console.log('RESPONSE', response);
-					const { token, user } = response;
-					if (token) {
-						console.log('LOGIN = ', user);
-						this.token = token;
-						localStorage.setItem('token', token);
-						localStorage.setItem('user', user.name);
-						localStorage.setItem('userID', user._id);
-						localStorage.setItem('role', user.role);
-						this.isAuthenticated = true;
-						this.authStatusListener.next(true);
-						return user.role;
-					}
-				}),
-				catchError(this.handleError)
-			);
-	}
+    return this.http
+      .post<User>(`${this.shopUrl}/register`, user)
+      .pipe(catchError(this.handleError));
+  }
 
-	userInfo() {
-		return localStorage.getItem('user');
-	}
+  //login
+  loginUser(user: object): Observable<string> {
+    return this.http
+      .post<{
+        token: string;
+        user: { name: string; _id: string; role: string };
+      }>(`${this.shopUrl}/login`, user)
+      .pipe(
+        map((response) => {
+          console.log("RESPONSE", response);
+          const { token, user } = response;
+          if (token) {
+            console.log("LOGIN = ", user);
+            this.token = token;
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", user.name);
+            localStorage.setItem("userID", user._id);
+            localStorage.setItem("role", user.role);
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+            return user.role;
+          }
+        }),
+        catchError(this.handleError)
+      );
+  }
 
-	isLoggedIn() {
-		return !!localStorage.getItem('token');
-	}
+  userInfo() {
+    return localStorage.getItem("user");
+  }
 
-	isAdminLogged() {
-		return localStorage.getItem('role') === 'admin';
-	}
+  isLoggedIn() {
+    return !!localStorage.getItem("token");
+  }
 
-	userIdInfo() {
-		return localStorage.getItem('userID');
-	}
+  isAdminLogged() {
+    return localStorage.getItem("role") === "admin";
+  }
 
-	getUserDetails(id: string): Observable<User> {
-		return this.http.get<User>(`${this.shopUrl}/user/${id}`);
-	}
+  userIdInfo() {
+    return localStorage.getItem("userID");
+  }
 
-	private handleError(res: HttpErrorResponse | any) {
-		console.error(res.error || res.body.error);
-		return observableThrowError(res.error || 'Server error');
-	}
+  getUserDetails(id: string): Observable<User> {
+    return this.http.get<User>(`${this.shopUrl}/user/${id}`);
+  }
+
+  private handleError(res: HttpErrorResponse | any) {
+    console.error(res.error || res.body.error);
+    return observableThrowError(res.error || "Server error");
+  }
 }
