@@ -1,8 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { User } from "../models/user";
-import { Observable, throwError as observableThrowError, Subject } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import {
+  Observable,
+  throwError as observableThrowError,
+  Subject,
+  BehaviorSubject,
+} from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 
 interface emailAvailableResponse {
@@ -18,6 +23,7 @@ export class AuthService {
   private isAuthenticated = false;
   private isAdmin = false;
   private authStatusListener = new Subject<boolean>();
+  signedIn = new BehaviorSubject(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -87,7 +93,12 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return !!localStorage.getItem("token");
+    // return !!localStorage.getItem("token");
+    if (localStorage.getItem("token")) {
+      this.signedIn.next(true);
+      return true;
+    }
+    return false;
   }
 
   isAdminLogged() {
@@ -96,6 +107,12 @@ export class AuthService {
 
   userIdInfo() {
     return localStorage.getItem("userID");
+  }
+
+  logOut() {
+    localStorage.clear();
+    this.signedIn.next(false);
+    this.router.navigate(["/login"]);
   }
 
   getUserDetails(id: string): Observable<User> {
