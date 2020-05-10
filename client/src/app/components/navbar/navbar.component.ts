@@ -16,8 +16,8 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   logout() {
+    this.authService.logOut();
     this.authService.signedIn.subscribe((signedIn) => {
-      this.authService.logOut();
       this.signedIn = signedIn;
     });
   }
