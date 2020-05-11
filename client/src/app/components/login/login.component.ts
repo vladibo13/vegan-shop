@@ -1,51 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Validators } from "@angular/forms";
+import { AuthService } from "src/app/services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: [ './login.component.css' ]
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-	error: any;
-	submitted = false;
-	loginForm: FormGroup;
-	user: string;
+  error: any;
+  submitted = false;
+  loginForm: FormGroup;
+  user: string;
 
-	constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-	get email() {
-		return this.loginForm.get('email');
-	}
+  get email() {
+    return this.loginForm.get("email");
+  }
 
-	get password() {
-		return this.loginForm.get('password');
-	}
+  get password() {
+    return this.loginForm.get("password");
+  }
 
-	ngOnInit(): void {
-		this.loginForm = this.fb.group({
-			email: [ '', [ Validators.required, Validators.email ] ],
-			password: [ '', Validators.required ]
-		});
-	}
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", Validators.required],
+    });
+  }
 
-	onLogin(): void {
-		this.submitted = true;
-		this.authService.loginUser(this.loginForm.value).subscribe(
-			(role: string) => {
-				console.log(role);
-				if (role === 'admin') {
-					this.router.navigate([ '/admin' ]);
-					return;
-				}
-				this.router.navigate([ '/' ]);
-			},
-			(e) => {
-				this.error = e.message;
-			}
-		);
-	}
+  onLogin(): void {
+    this.submitted = true;
+    this.authService.loginUser(this.loginForm.value).subscribe(
+      (role: string) => {
+        this.router.navigate(["/"]);
+      },
+      (e) => {
+        this.error = e.message;
+      }
+    );
+  }
 }

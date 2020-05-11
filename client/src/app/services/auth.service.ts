@@ -14,41 +14,24 @@ interface emailAvailableResponse {
   exist: boolean;
 }
 
+interface userResponse {
+  token: string;
+  user: { name: string; _id: string; role: string };
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private shopUrl = "http://localhost:5000/api/auth";
-  private token: string;
-  private isAuthenticated = false;
-  private isAdmin = false;
-  private authStatusListener = new Subject<boolean>();
   signedIn = new BehaviorSubject(false);
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  emailAvailable(email: string) {
-    return this.http.post<emailAvailableResponse>(
-      "http://localhost:5000/api/auth/username",
-      {
-        username: email,
-      }
-    );
-  }
-
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
-  }
-
-  getToken() {
-    return this.token;
-  }
-
-  getIsAuth() {
-    return this.isAuthenticated;
-  }
-  getIsAdmin() {
-    return this.isAdmin;
+  emailAvailable(username: string) {
+    return this.http.post<emailAvailableResponse>(`${this.shopUrl}/username`, {
+      username,
+    });
   }
 
   // register
@@ -63,29 +46,20 @@ export class AuthService {
 
   //login
   loginUser(user: object): Observable<string> {
-    return this.http
-      .post<{
-        token: string;
-        user: { name: string; _id: string; role: string };
-      }>(`${this.shopUrl}/login`, user)
-      .pipe(
-        map((response) => {
-          console.log("RESPONSE", response);
-          const { token, user } = response;
-          if (token) {
-            console.log("LOGIN = ", user);
-            this.token = token;
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", user.name);
-            localStorage.setItem("userID", user._id);
-            localStorage.setItem("role", user.role);
-            this.isAuthenticated = true;
-            this.authStatusListener.next(true);
-            return user.role;
-          }
-        }),
-        catchError(this.handleError)
-      );
+    return this.http.post<userResponse>(`${this.shopUrl}/login`, user).pipe(
+      map((response) => {
+        console.log("RESPONSE", response);
+        const { token, user } = response;
+        if (token) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", user.name);
+          localStorage.setItem("userID", user._id);
+          localStorage.setItem("role", user.role);
+          return user.role;
+        }
+      }),
+      catchError(this.handleError)
+    );
   }
 
   userInfo() {

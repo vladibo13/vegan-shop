@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { PasswordValidator } from "src/app/validators/password.validator";
 import { UniqueEmail } from "src/app/validators/unique-email.validator";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -14,11 +15,13 @@ export class RegisterComponent implements OnInit {
   registerFormFirst: FormGroup;
   registerFormSecond: FormGroup;
   stepper = false;
+  error: any;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private uniqueEmail: UniqueEmail
+    private uniqueEmail: UniqueEmail,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -56,8 +59,8 @@ export class RegisterComponent implements OnInit {
     };
     delete data.passwordConfirm;
     this.authService.createUser(data).subscribe(
-      () => console.log("registred success"),
-      (e) => console.warn(e)
+      () => this.router.navigate(["/login"]),
+      (e) => (this.error = e.message)
     );
   }
 

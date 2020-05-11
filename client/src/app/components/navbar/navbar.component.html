@@ -17,6 +17,7 @@
         <a
           class="nav-link"
           [routerLink]="['/store']"
+          routerLinkActive="active"
           (click)="isMenuCollapsed = true"
           >Store</a
         >
@@ -25,6 +26,7 @@
         <a
           class="nav-link"
           [routerLink]="['/admin']"
+          routerLinkActive="active"
           (click)="isMenuCollapsed = true"
           >Admin</a
         >
@@ -32,11 +34,12 @@
     </ul>
     <ul class="navbar-nav">
       <ng-container *ngIf="!signedIn">
-        <li class="nav-item active">
+        <li class="nav-item">
           <!-- Step 4: Close the menu when a link is clicked. -->
           <a
             class="nav-link"
             [routerLink]="['/login']"
+            routerLinkActive="active"
             (click)="isMenuCollapsed = true"
             >Login</a
           >
@@ -45,6 +48,7 @@
           <a
             class="nav-link"
             [routerLink]="['/register']"
+            routerLinkActive="active"
             (click)="isMenuCollapsed = true"
             >Register</a
           >
