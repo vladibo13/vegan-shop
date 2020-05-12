@@ -5,6 +5,12 @@ const app = express();
 const { json, urlencoded } = require("body-parser");
 const { verifyAuth } = require("./controllers/auth.controllers");
 
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerOptions = require("./swagger-config");
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 const authRouter = require("./routes/auth.router");
 const testRouter = require("./routes/test.router");
 const productRouter = require("./routes/product.router");
