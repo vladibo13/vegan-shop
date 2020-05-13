@@ -2,6 +2,7 @@ const connect = require("./db/db");
 const cors = require("cors");
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 const { json, urlencoded } = require("body-parser");
 const { verifyAuth } = require("./controllers/auth.controllers");
 
@@ -9,7 +10,6 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerOptions = require("./swagger-config");
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const authRouter = require("./routes/auth.router");
 const testRouter = require("./routes/test.router");
@@ -18,9 +18,11 @@ const categoryRouter = require("./routes/category.router");
 const cartRouter = require("./routes/cart.router");
 const orderRouter = require("./routes/order.router");
 
+app.use(morgan("dev"));
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // app.use('/api/test', testRouter);
 app.use("/api/auth", authRouter);
@@ -30,6 +32,16 @@ app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
+
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).json({ error: { message: error.message } });
+});
 
 module.exports = async () => {
   try {
