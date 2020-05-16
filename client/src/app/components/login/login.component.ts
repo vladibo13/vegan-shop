@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     this.authService.loginUser(this.loginForm.value).subscribe(
       (role: string) => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["/store"]);
       },
       (e) => {
         this.error = e.message;

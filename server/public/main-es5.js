@@ -191,7 +191,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"container-fluid\">\n    <div class=\"row mt-5\">\n        <div class=\"col-md-4 col-sm-12 mb-3\">\n            <app-login *ngIf=\"!isLoggedIn\"></app-login>\n            <h6 *ngIf=\"isLoggedIn && user\">Welcome Back {{user}} </h6>\n        </div>\n        <div class=\"col-md-4 col-sm-12 mb-4\">\n            <app-about></app-about>\n        </div>\n        <div class=\"col-md-4 col-sm-12 mb-4\">\n            <app-shop-description [isOpenCart]=\"isOpenCart\"></app-shop-description>\n        </div>\n    </div>\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"container\">\n  <div class=\"row mt-5\">\n    <div class=\"col-md-4 col-sm-12 mb-3\">\n      <app-login *ngIf=\"!signedIn\"></app-login>\n      <h6 *ngIf=\"signedIn && user\">Welcome Back {{ user }}</h6>\n    </div>\n    <div class=\"col-md-4 col-sm-12 mb-4\">\n      <app-about></app-about>\n    </div>\n    <div class=\"col-md-4 col-sm-12 mb-4\">\n      <app-shop-description [isOpenCart]=\"isOpenCart\"></app-shop-description>\n    </div>\n  </div>\n</div>\n";
     /***/
   },
 
@@ -2279,12 +2279,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(HomeComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          this.isLoggedIn = this.authService.isLoggedIn();
+          var _this8 = this;
+
+          this.authService.isLoggedIn();
           this.user = this.authService.userInfo();
-          this.isOpenCart = this.cartService.isOpenCart();
-          console.log(this.isLoggedIn);
-          console.log('user = ', this.user);
-          console.log('home isopencart = ', this.isOpenCart);
+          this.authService.signedIn.subscribe(function (signedIn) {
+            _this8.signedIn = signedIn;
+            _this8.isOpenCart = _this8.cartService.isOpenCart();
+          });
         }
       }]);
 
@@ -2300,7 +2302,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     HomeComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-      selector: 'app-home',
+      selector: "app-home",
       template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
       /*! raw-loader!./home.component.html */
       "./node_modules/raw-loader/dist/cjs.js!./src/app/components/home/home.component.html")).default,
@@ -2404,13 +2406,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onLogin",
         value: function onLogin() {
-          var _this8 = this;
+          var _this9 = this;
 
           this.submitted = true;
           this.authService.loginUser(this.loginForm.value).subscribe(function (role) {
-            _this8.router.navigate(["/"]);
+            _this9.router.navigate(["/store"]);
           }, function (e) {
-            _this8.error = e.message;
+            _this9.error = e.message;
           });
         }
       }, {
@@ -2530,20 +2532,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(NavbarComponent, [{
         key: "logout",
         value: function logout() {
-          var _this9 = this;
+          var _this10 = this;
 
           this.authService.logOut();
           this.authService.signedIn.subscribe(function (signedIn) {
-            _this9.signedIn = signedIn;
+            _this10.signedIn = signedIn;
           });
         }
       }, {
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this10 = this;
+          var _this11 = this;
 
           this.authService.signedIn.subscribe(function (signedIn) {
-            _this10.signedIn = signedIn;
+            _this11.signedIn = signedIn;
           });
         }
       }, {
@@ -2690,7 +2692,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "orderFinalize",
         value: function orderFinalize() {
-          var _this11 = this;
+          var _this12 = this;
 
           if (!this.orderDetailsForm.valid) return;
           console.log(this.orderDetailsForm.value);
@@ -2701,28 +2703,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             console.log('created order = ', c);
             localStorage.removeItem('cartID');
 
-            _this11.router.navigate(['/ordersuccess']);
+            _this12.router.navigate(['/ordersuccess']);
           });
         }
       }, {
         key: "getCity",
         value: function getCity() {
-          var _this12 = this;
+          var _this13 = this;
 
           // this.orderDetailsForm.controls.city.setValue()
           // this.orderDetailsForm.controls.city.setValue(user.city)
           console.log('USERID = ', this.userId);
           this.authService.getUserDetails(this.userId).subscribe(function (user) {
-            return _this12.orderDetailsForm.controls.city.setValue(user.city);
+            return _this13.orderDetailsForm.controls.city.setValue(user.city);
           });
         }
       }, {
         key: "getStreet",
         value: function getStreet() {
-          var _this13 = this;
+          var _this14 = this;
 
           this.authService.getUserDetails(this.userId).subscribe(function (user) {
-            return _this13.orderDetailsForm.controls.street.setValue(user.street);
+            return _this14.orderDetailsForm.controls.street.setValue(user.street);
           });
         }
       }, {
@@ -2934,23 +2936,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(OrderComponent, [{
         key: "getCartProducts",
         value: function getCartProducts() {
-          var _this14 = this;
+          var _this15 = this;
 
           // this.cartService.getCartProducts().subscribe((p) => {
           // 	console.log('P = ', p);
           // 	this.cartProducts = p;
           // });
           this.cartService.getCartProductsById(this.cartID).subscribe(function (p) {
-            _this14.cartProducts = p;
+            _this15.cartProducts = p;
           });
         }
       }, {
         key: "getTotalPrice",
         value: function getTotalPrice() {
-          var _this15 = this;
+          var _this16 = this;
 
           this.cartService.getTotalPrice(this.cartID).subscribe(function (price) {
-            return _this15.totalPrice = price;
+            return _this16.totalPrice = price;
           });
         }
       }, {
@@ -3072,10 +3074,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ProductsSearchComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this16 = this;
+          var _this17 = this;
 
           this.unsubscribeSearchTextChanges = this.searchFormControl.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(200)).subscribe(function (newValue) {
-            _this16.searchService.setSearchTextChanges(newValue); // this.searchText = newValue;
+            _this17.searchService.setSearchTextChanges(newValue); // this.searchText = newValue;
 
 
             console.log(newValue);
@@ -3231,14 +3233,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onRegisterSecond",
         value: function onRegisterSecond() {
-          var _this17 = this;
+          var _this18 = this;
 
           var data = Object.assign(Object.assign({}, this.registerFormFirst.value), this.registerFormSecond.value);
           delete data.passwordConfirm;
           this.authService.createUser(data).subscribe(function () {
-            return _this17.router.navigate(["/login"]);
+            return _this18.router.navigate(["/login"]);
           }, function (e) {
-            return _this17.error = e.message;
+            return _this18.error = e.message;
           });
         }
       }, {
@@ -3385,20 +3387,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ShopDescriptionComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this18 = this;
+          var _this19 = this;
 
           console.log('IS OPEN CART ', this.isOpenCart);
           this.productService.getAmountOfProducts().subscribe(function (amount) {
             if (!amount) return;
-            _this18.amountOfProductInDB = amount;
+            _this19.amountOfProductInDB = amount;
           });
           this.orderService.getAmountOfOrders().subscribe(function (amount) {
             if (!amount) return;
-            _this18.amountOfOrdersInDB = amount;
+            _this19.amountOfOrdersInDB = amount;
           });
           if (!this.cartID) return;
           this.cartService.getTotalPrice(this.cartID).subscribe(function (total) {
-            _this18.totalPrice = total;
+            _this19.totalPrice = total;
           });
         }
       }]);
@@ -3491,13 +3493,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*#__PURE__*/
     function () {
       function StoreFilterComponent(categoryService) {
-        var _this19 = this;
+        var _this20 = this;
 
         _classCallCheck(this, StoreFilterComponent);
 
         this.categoryService = categoryService;
         this.categoryService.getAllCategories().subscribe(function (c) {
-          _this19.categories = c;
+          _this20.categories = c;
         }, function (e) {
           return console.log(e);
         });
@@ -3717,21 +3719,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "open",
         value: function open(content) {
-          var _this20 = this;
+          var _this21 = this;
 
           this.modalService.open(content, {
             ariaLabelledBy: 'modal-basic-title'
           }).result.then(function (result) {
-            _this20.closeResult = "Closed with: ".concat(result);
+            _this21.closeResult = "Closed with: ".concat(result);
           }, function (reason) {
-            _this20.closeResult = "Dismissed ".concat(_this20.getDismissReason(reason));
+            _this21.closeResult = "Dismissed ".concat(_this21.getDismissReason(reason));
           });
           console.log('PRODUCT OPEN = ', this.product);
         }
       }, {
         key: "add",
         value: function add(product) {
-          var _this21 = this;
+          var _this22 = this;
 
           this.cartService.addProductToCart({
             productID: product._id,
@@ -3739,7 +3741,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             price: this.amount,
             cartID: localStorage.getItem('cartID')
           }).subscribe(function (res) {
-            return _this21.onUpdateCartProduct(_this21.cartID);
+            return _this22.onUpdateCartProduct(_this22.cartID);
           });
           this.modalService.dismissAll();
         }
@@ -3884,11 +3886,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(StoreComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this22 = this;
+          var _this23 = this;
 
           console.log('NGONINIT RUN');
           this.unsubscribeSearchTextChanges = this.searchService.searchTextChanges.subscribe(function (newValue) {
-            _this22.searchText = newValue;
+            _this23.searchText = newValue;
           });
           this.userID = this.authService.userIdInfo();
 
@@ -3903,31 +3905,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.getCartProductsById(this.cartID);
           this.getTotalPrice(this.cartID);
           this.route.queryParamMap.subscribe(function (params) {
-            _this22.category = params.get('category');
+            _this23.category = params.get('category');
 
-            if (_this22.category) {
-              _this22.getProductsByCategory();
+            if (_this23.category) {
+              _this23.getProductsByCategory();
             } else {
-              _this22.getProducts();
+              _this23.getProducts();
             }
           });
         }
       }, {
         key: "getProductsByCategory",
         value: function getProductsByCategory() {
-          var _this23 = this;
+          var _this24 = this;
 
           this.productService.getAllProductsByCategory(this.category).subscribe(function (p) {
-            return _this23.products = p;
+            return _this24.products = p;
           });
         }
       }, {
         key: "getProducts",
         value: function getProducts() {
-          var _this24 = this;
+          var _this25 = this;
 
           this.productService.getAllProducts().subscribe(function (p) {
-            _this24.products = p;
+            _this25.products = p;
           }, function (e) {
             return console.log(e);
           });
@@ -3935,24 +3937,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getCartProducts",
         value: function getCartProducts() {
-          var _this25 = this;
+          var _this26 = this;
 
           this.cartService.getCartProducts().subscribe(function (p) {
             console.log('P = ', p);
-            _this25.cartProducts = p;
+            _this26.cartProducts = p;
           });
         }
       }, {
         key: "getCartProductsById",
         value: function getCartProductsById(cartId) {
-          var _this26 = this;
+          var _this27 = this;
 
           if (!cartId) return;
           this.cartService.getCartProductsById(cartId).subscribe(function (p) {
             console.log('cart products by id = ', p);
-            _this26.cartProducts = p;
+            _this27.cartProducts = p;
 
-            _this26.getTotalPrice(_this26.cartID);
+            _this27.getTotalPrice(_this27.cartID);
           });
         }
       }, {
@@ -3965,15 +3967,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onDeleted",
         value: function onDeleted(cartID) {
-          var _this27 = this;
+          var _this28 = this;
 
           this.cartService.deleteCartProduct(cartID).subscribe(function (p) {
             console.log('product deleted');
             console.log('Product DELETED ', p);
 
-            _this27.getCartProductsById(_this27.cartID);
+            _this28.getCartProductsById(_this28.cartID);
 
-            _this27.getTotalPrice(_this27.cartID);
+            _this28.getTotalPrice(_this28.cartID);
           });
         }
       }, {
@@ -3984,11 +3986,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getTotalPrice",
         value: function getTotalPrice(id) {
-          var _this28 = this;
+          var _this29 = this;
 
           if (!id) return;
           this.cartService.getTotalPrice(id).subscribe(function (total) {
-            return _this28.totalPrice = total;
+            return _this29.totalPrice = total;
           });
         }
       }]);
@@ -4277,10 +4279,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getAllProductsByInput",
         value: function getAllProductsByInput(searchText) {
-          var _this29 = this;
+          var _this30 = this;
 
           return this.productService.getAllProductsByInput(searchText).subscribe(function (p) {
-            return _this29.products = p;
+            return _this30.products = p;
           });
         }
       }]);
@@ -4388,12 +4390,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "loginUser",
         value: function loginUser(user) {
+          var _this31 = this;
+
           return this.http.post("".concat(this.shopUrl, "/login"), user).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (response) {
             console.log("RESPONSE", response);
             var token = response.token,
                 user = response.user;
 
             if (token) {
+              _this31.signedIn.next(true);
+
               localStorage.setItem("token", token);
               localStorage.setItem("user", user.name);
               localStorage.setItem("userID", user._id);
@@ -4516,6 +4522,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, CartService);
 
         this.http = http;
+        this.localDevUrl = "http://localhost:5000/";
         this.cartUrl = "api/cart";
         this.addProductURL = "api/cart/addProduct";
       } // private getCartProductsEventSUbject = new BehaviorSubject<any>([]);
@@ -4646,6 +4653,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, CategoryService);
 
         this.http = http;
+        this.localDevUrl = "http://localhost:5000/";
         this.categoryURL = "api/category";
       }
 
@@ -4717,6 +4725,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, OrderService);
 
         this.http = http;
+        this.localDevUrl = "http://localhost:5000/";
         this.orderURL = "api/order";
       }
 
@@ -4804,6 +4813,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         _classCallCheck(this, ProductService);
 
         this.http = http;
+        this.localDevUrl = "http://localhost:5000/";
         this.productURL = "api/product";
       }
 
@@ -5084,7 +5094,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./src/app/services/auth.service.ts");
 
     var UniqueEmail = function UniqueEmail(authSerivce) {
-      var _this30 = this;
+      var _this32 = this;
 
       _classCallCheck(this, UniqueEmail);
 
@@ -5093,7 +5103,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.validate = function (control) {
         var value = control.value;
         console.log(value);
-        return _this30.authSerivce.emailAvailable(value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (value) {
+        return _this32.authSerivce.emailAvailable(value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (value) {
           if (!value.exist) {
             console.log("not exist");
             return null;

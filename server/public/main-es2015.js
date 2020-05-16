@@ -123,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container-fluid\">\n    <div class=\"row mt-5\">\n        <div class=\"col-md-4 col-sm-12 mb-3\">\n            <app-login *ngIf=\"!isLoggedIn\"></app-login>\n            <h6 *ngIf=\"isLoggedIn && user\">Welcome Back {{user}} </h6>\n        </div>\n        <div class=\"col-md-4 col-sm-12 mb-4\">\n            <app-about></app-about>\n        </div>\n        <div class=\"col-md-4 col-sm-12 mb-4\">\n            <app-shop-description [isOpenCart]=\"isOpenCart\"></app-shop-description>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\n  <div class=\"row mt-5\">\n    <div class=\"col-md-4 col-sm-12 mb-3\">\n      <app-login *ngIf=\"!signedIn\"></app-login>\n      <h6 *ngIf=\"signedIn && user\">Welcome Back {{ user }}</h6>\n    </div>\n    <div class=\"col-md-4 col-sm-12 mb-4\">\n      <app-about></app-about>\n    </div>\n    <div class=\"col-md-4 col-sm-12 mb-4\">\n      <app-shop-description [isOpenCart]=\"isOpenCart\"></app-shop-description>\n    </div>\n  </div>\n</div>\n");
 
 /***/ }),
 
@@ -1230,12 +1230,12 @@ let HomeComponent = class HomeComponent {
         this.cartService = cartService;
     }
     ngOnInit() {
-        this.isLoggedIn = this.authService.isLoggedIn();
+        this.authService.isLoggedIn();
         this.user = this.authService.userInfo();
-        this.isOpenCart = this.cartService.isOpenCart();
-        console.log(this.isLoggedIn);
-        console.log('user = ', this.user);
-        console.log('home isopencart = ', this.isOpenCart);
+        this.authService.signedIn.subscribe((signedIn) => {
+            this.signedIn = signedIn;
+            this.isOpenCart = this.cartService.isOpenCart();
+        });
     }
 };
 HomeComponent.ctorParameters = () => [
@@ -1244,7 +1244,7 @@ HomeComponent.ctorParameters = () => [
 ];
 HomeComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-home',
+        selector: "app-home",
         template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./home.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/home/home.component.html")).default,
         styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./home.component.css */ "./src/app/components/home/home.component.css")).default]
     })
@@ -1310,7 +1310,7 @@ let LoginComponent = class LoginComponent {
     onLogin() {
         this.submitted = true;
         this.authService.loginUser(this.loginForm.value).subscribe((role) => {
-            this.router.navigate(["/"]);
+            this.router.navigate(["/store"]);
         }, (e) => {
             this.error = e.message;
         });
@@ -2432,7 +2432,7 @@ let AuthService = class AuthService {
         this.http = http;
         this.router = router;
         this.localDevUrl = "http://localhost:5000/";
-        this.shopUrl = "api/auth";
+        this.shopUrl = `api/auth`;
         this.signedIn = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
     }
     emailAvailable(username) {
@@ -2454,6 +2454,7 @@ let AuthService = class AuthService {
             console.log("RESPONSE", response);
             const { token, user } = response;
             if (token) {
+                this.signedIn.next(true);
                 localStorage.setItem("token", token);
                 localStorage.setItem("user", user.name);
                 localStorage.setItem("userID", user._id);
@@ -2527,8 +2528,9 @@ __webpack_require__.r(__webpack_exports__);
 let CartService = class CartService {
     constructor(http) {
         this.http = http;
-        this.cartUrl = "api/cart";
-        this.addProductURL = "api/cart/addProduct";
+        this.localDevUrl = "http://localhost:5000/";
+        this.cartUrl = `api/cart`;
+        this.addProductURL = `api/cart/addProduct`;
     }
     // private getCartProductsEventSUbject = new BehaviorSubject<any>([]);
     // data: Observable<any> = this.getCartProductsEventSUbject.asObservable();
@@ -2604,7 +2606,8 @@ __webpack_require__.r(__webpack_exports__);
 let CategoryService = class CategoryService {
     constructor(http) {
         this.http = http;
-        this.categoryURL = "api/category";
+        this.localDevUrl = "http://localhost:5000/";
+        this.categoryURL = `api/category`;
     }
     getAllCategories() {
         // return this.http.get<Category>(this.categoryURL).pipe(map((c: Category) => (this.categories = c)));
@@ -2643,7 +2646,8 @@ __webpack_require__.r(__webpack_exports__);
 let OrderService = class OrderService {
     constructor(http) {
         this.http = http;
-        this.orderURL = "api/order";
+        this.localDevUrl = "http://localhost:5000/";
+        this.orderURL = `api/order`;
     }
     createOrder(order) {
         return this.http.post(this.orderURL, order);
@@ -2688,7 +2692,8 @@ __webpack_require__.r(__webpack_exports__);
 let ProductService = class ProductService {
     constructor(http) {
         this.http = http;
-        this.productURL = "api/product";
+        this.localDevUrl = "http://localhost:5000/";
+        this.productURL = `api/product`;
     }
     getAllProducts() {
         return this.http

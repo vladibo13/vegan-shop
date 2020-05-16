@@ -23,7 +23,8 @@ interface userResponse {
   providedIn: "root",
 })
 export class AuthService {
-  private shopUrl = "http://localhost:5000/api/auth";
+  private localDevUrl = "http://localhost:5000/";
+  private shopUrl = `${this.localDevUrl}api/auth`;
   signedIn = new BehaviorSubject(false);
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -51,6 +52,7 @@ export class AuthService {
         console.log("RESPONSE", response);
         const { token, user } = response;
         if (token) {
+          this.signedIn.next(true);
           localStorage.setItem("token", token);
           localStorage.setItem("user", user.name);
           localStorage.setItem("userID", user._id);

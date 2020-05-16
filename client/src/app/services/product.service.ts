@@ -1,49 +1,56 @@
-import { Injectable } from '@angular/core';
-import { Observable, throwError as observableThrowError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Product } from '../models/product';
+import { Injectable } from "@angular/core";
+import { Observable, throwError as observableThrowError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { Router } from "@angular/router";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from "@angular/common/http";
+import { Product } from "../models/product";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
 export class ProductService {
-	private productURL = 'http://localhost:5000/api/product';
+  private localDevUrl = "http://localhost:5000/";
+  private productURL = `${this.localDevUrl}api/product`;
 
-	products: Product;
+  products: Product;
 
-	constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-	getAllProducts(): Observable<Product[]> {
-		return this.http.get<Product[]>(this.productURL).pipe(catchError(this.handleError));
-	}
+  getAllProducts(): Observable<Product[]> {
+    return this.http
+      .get<Product[]>(this.productURL)
+      .pipe(catchError(this.handleError));
+  }
 
-	getAllProductsByCategory(category: string): Observable<Product[]> {
-		let params = new HttpParams().set('search', category);
-		return this.http.get<Product[]>(this.productURL + '/s/c', { params });
-	}
+  getAllProductsByCategory(category: string): Observable<Product[]> {
+    let params = new HttpParams().set("search", category);
+    return this.http.get<Product[]>(this.productURL + "/s/c", { params });
+  }
 
-	getAllProductsByInput(searchText: string): Observable<Product[]> {
-		console.log('FROM INPUT = ', searchText);
+  getAllProductsByInput(searchText: string): Observable<Product[]> {
+    console.log("FROM INPUT = ", searchText);
 
-		return this.http.get<Product[]>(`${this.productURL}/${searchText}`);
-	}
+    return this.http.get<Product[]>(`${this.productURL}/${searchText}`);
+  }
 
-	updateProductByID(product: Product) {
-		return this.http.put<Product>(`${this.productURL}`, product);
-	}
+  updateProductByID(product: Product) {
+    return this.http.put<Product>(`${this.productURL}`, product);
+  }
 
-	createProduct(product: Product) {
-		return this.http.post<Product>(`${this.productURL}`, product);
-	}
+  createProduct(product: Product) {
+    return this.http.post<Product>(`${this.productURL}`, product);
+  }
 
-	getAmountOfProducts(): Observable<number> {
-		return this.http.get<number>(`${this.productURL}/t/p`);
-	}
+  getAmountOfProducts(): Observable<number> {
+    return this.http.get<number>(`${this.productURL}/t/p`);
+  }
 
-	private handleError(res: HttpErrorResponse | any) {
-		console.error(res.error || res.body.error);
-		return observableThrowError(res.error || 'Server error');
-	}
+  private handleError(res: HttpErrorResponse | any) {
+    console.error(res.error || res.body.error);
+    return observableThrowError(res.error || "Server error");
+  }
 }

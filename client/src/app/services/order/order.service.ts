@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Order } from 'src/app/models/order';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Order } from "src/app/models/order";
+import { Observable } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
 export class OrderService {
-	private orderURL = 'http://localhost:5000/api/order';
-	constructor(private http: HttpClient) {}
+  private localDevUrl = "http://localhost:5000/";
+  private orderURL = `${this.localDevUrl}api/order`;
+  constructor(private http: HttpClient) {}
 
-	createOrder(order: Order) {
-		return this.http.post<Order>(this.orderURL, order);
-	}
+  createOrder(order: Order) {
+    return this.http.post<Order>(this.orderURL, order);
+  }
 
-	getAmountOfOrders(): Observable<number> {
-		return this.http.get<number>(`${this.orderURL}/t/o`);
-	}
+  getAmountOfOrders(): Observable<number> {
+    return this.http.get<number>(`${this.orderURL}/t/o`);
+  }
 }
