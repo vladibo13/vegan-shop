@@ -37,11 +37,11 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.productURL}/${searchText}`);
   }
 
-  updateProductByID(product: Product) {
+  updateProductByID(product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.productURL}`, product);
   }
 
-  createProduct(product: Product) {
+  createProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(`${this.productURL}`, product);
   }
 

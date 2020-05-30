@@ -1,32 +1,32 @@
-const Order = require('../models/Order');
-const CartInfo = require('../models/CartInfo');
+const Order = require("../models/Order");
+const CartInfo = require("../models/CartInfo");
 
 exports.createOrder = async (req, res) => {
-	const { user, cart, price, city, street, dateOfOrder, card } = req.body;
-	console.log('ORDER BODY = ', req.body);
-	try {
-		const newOrder = await Order.create({
-			user,
-			cart,
-			price,
-			city,
-			street,
-			dateOfOrder,
-			card
-		});
-		res.status(200).json(newOrder);
-	} catch (e) {
-		res.status(401).json(e);
-	}
+  const { user, cart, price, city, street, dateOfOrder, card } = req.body;
+  console.log("ORDER BODY = ", req.body);
+  try {
+    const newOrder = await Order.create({
+      user,
+      cart,
+      price,
+      city,
+      street,
+      dateOfOrder,
+      card,
+    });
+    res.status(200).json(newOrder);
+  } catch (e) {
+    res.status(400).json(e);
+  }
 };
 
 exports.amountOfOrders = async (req, res) => {
-	try {
-		const orders = await Order.countDocuments({});
-		res.status(200).json(orders);
-	} catch (e) {
-		res.status(401).json(e);
-	}
+  try {
+    const orders = await Order.countDocuments({});
+    res.status(200).json(orders);
+  } catch (e) {
+    res.status(400).json(e);
+  }
 };
 
 // exports.createReception = async (req, res) => {

@@ -20,7 +20,7 @@ exports.searchByInput = async (req, res) => {
     );
     res.status(200).json(filtredProducts);
   } catch (e) {
-    return res.status(401).json(e);
+    return res.status(400).json(e);
   }
 };
 
@@ -32,7 +32,9 @@ exports.searchProductByCategory = async (req, res) => {
       (p) => p.categoryID.type === searchQuery
     );
     res.status(200).json(filtredProducts);
-  } catch (e) {}
+  } catch (e) {
+    return res.status(400).json(e);
+  }
 };
 
 exports.updateProductByID = async (req, res) => {
@@ -46,13 +48,17 @@ exports.updateProductByID = async (req, res) => {
         { _id },
         { $set: { pName, price, imageURL, categoryID: newCategory._id } }
       );
-      return res.json({ msg: "updated, new category created", updatedProduct });
+      return res
+        .status(200)
+        .json({ msg: "updated, new category created", updatedProduct });
     }
     const updatedProduct = await Product.updateOne(
       { _id },
       { $set: { pName, price, imageURL } }
     );
-    res.json({ msg: "updated, no category created", updatedProduct });
+    res
+      .status(200)
+      .json({ msg: "updated, no category created", updatedProduct });
   } catch (e) {
     return res.status(400).json(e);
   }
@@ -74,7 +80,7 @@ exports.createProduct = async (req, res) => {
         price,
         categoryID: newCategory._id,
       });
-      return res.status(200).json({
+      return res.status(201).json({
         msg: "category not found, new category created",
         product,
       });
@@ -97,6 +103,6 @@ exports.amountOfProducts = async (req, res) => {
     const products = await Product.countDocuments({});
     res.status(200).json(products);
   } catch (e) {
-    res.status(401).json(e);
+    res.status(400).json(e);
   }
 };

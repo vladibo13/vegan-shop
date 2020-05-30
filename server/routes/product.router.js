@@ -6,6 +6,8 @@ const productController = require("../controllers/product.controllers");
  * @swagger
  * /api/product:
  *  get:
+ *    tags:  'product'
+ *    summary: 'product'
  *    description: Use to request all products
  *    responses:
  *      '200':

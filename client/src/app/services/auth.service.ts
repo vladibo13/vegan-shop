@@ -29,7 +29,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  emailAvailable(username: string) {
+  emailAvailable(username: string): Observable<emailAvailableResponse> {
     return this.http.post<emailAvailableResponse>(`${this.shopUrl}/username`, {
       username,
     });

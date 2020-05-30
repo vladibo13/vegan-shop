@@ -9,7 +9,7 @@ const { verifyAuth } = require("./controllers/auth.controllers");
 
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const swaggerOptions = require("./swagger-config");
+const swaggerOptions = require("./swagger-config.js");
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 const authRouter = require("./routes/auth.router");
